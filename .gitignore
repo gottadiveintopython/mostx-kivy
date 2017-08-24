@@ -1,0 +1,9 @@
+__pycache__/
+bin/
+*.pyc
+*.pyo
+*.json
+*.sublime-workspace
+buildozer.spec
+
+/.buildozer/

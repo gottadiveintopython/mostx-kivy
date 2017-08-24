@@ -1,0 +1,17 @@
+Credits :
+
+Programming Language
+    Python
+    https://www.python.org/
+
+Library
+    Kivy
+    https://kivy.org/
+
+Sound Effect
+    Mao Damashi
+    http://maoudamashii.jokersounds.com/
+
+Button Image
+    Shana Brian
+    http://shanabrian.com/
