@@ -21,7 +21,7 @@ BはCより小さい
 
 ### Test環境(Test Environment)
 
-- Python 3.4.3 + Kivy 1.9.1  
+- Python 3.6.0 + Kivy 1.10.0  
 
 ### その他  
 
