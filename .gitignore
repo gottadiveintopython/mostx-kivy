@@ -4,6 +4,6 @@ bin/
 *.pyo
 *.json
 *.sublime-workspace
-buildozer.spec
 
-/.buildozer/
+.buildozer/
+buildozer/
