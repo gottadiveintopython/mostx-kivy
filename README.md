@@ -14,16 +14,11 @@ BはCより小さい
 
 ![screenshot 0004](screenshot/0004.png)
 
-### 実行に必要なもの(requirements)
-
-- Python
-- Kivy
-
 ### Test環境(Test Environment)
 
-- Python 3.6.0 + Kivy 1.10.0  
+- Python 3.5.0 + Kivy 1.10.0  
 
 ### その他  
 
-古いVersionですがGoogle Play Storeでも公開しています  
+Google Play Storeでも公開しています  
 https://play.google.com/store/apps/details?id=jp.gottadiveintopython.mostx
