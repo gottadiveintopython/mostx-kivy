@@ -127,7 +127,7 @@ class RecordList(Screen):
         if mode == r'timeattack':
             for button, record in zip(self._buttons, rlist):
                 button.record = record
-                button.text = r'{: >6} pts   {: >10}'.format(
+                button.text = r'{: >6.2f} pts   {: >10}'.format(
                     record[r'points'],
                     record[r'date']
                 )
@@ -242,13 +242,14 @@ class DetailScreen(Screen):
         self._mode = mode
         if mode == r'timeattack':
             text = r"""{r[date]}
-  Points    ... {r[points]}
+  Points    ... {points}
   Answered  ... {r[num_answered]}
   Correct   ... {r[num_cleared]}
   Ratio     ... {r[num_cleared]}/{r[num_answered]}({ratio:.1f}%)
   Time      ... {formated_time}
   Languages ... {languages}""".format(
                 r=record,
+                points='{:.2f}'.format(record['points']),
                 ratio=(record[r'num_cleared'] / record[r'num_answered'] * 100),
                 formated_time=_format_time(record[r'time']),
                 languages=r', '.join(record[r'languages']))

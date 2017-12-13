@@ -76,7 +76,7 @@ class ResultScreen(Screen):
             l_points.text = r'   {} Quizzes'.format(result.num_cleared)
         elif data.mode == r'timeattack':
             l_mode.text = r'Time Attack Mode'
-            l_points.text = r'   {} pts'.format(result.points)
+            l_points.text = r'   {:.2f} pts'.format(result.points)
             l_other_info.text += "\nTime ... {}".format(
                 _format_time(result.time))
         if data.devmode or place < 0:
