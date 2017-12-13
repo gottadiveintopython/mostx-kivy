@@ -67,14 +67,14 @@ def _create_function_play_sound():
 
     directory = os.path.join(os.path.curdir, r'data', r'sound')
     key_filename_dict = {
-        r'intro': r'se_maoudamashii_effect05.mp3',
-        r'bween': r'se_maoudamashii_retro03.mp3',
-        r'ti': r'se_maoudamashii_system17.mp3',
-        r'newrecord': r'se_maoudamashii_jingle07.mp3',
-        r'rank-in': r'se_maoudamashii_jingle01.mp3',
-        r'correct': r'se_maoudamashii_onepoint30.mp3',
-        r'incorrect': r'se_maoudamashii_onepoint33.mp3',
-        r'count': r'se_maoudamashii_system13.mp3',
+        r'intro': r'se_maoudamashii_effect05.ogg',
+        r'bween': r'se_maoudamashii_retro03.ogg',
+        r'ti': r'se_maoudamashii_system17.ogg',
+        r'newrecord': r'se_maoudamashii_jingle07.ogg',
+        r'rank-in': r'se_maoudamashii_jingle01.ogg',
+        r'correct': r'se_maoudamashii_onepoint30.ogg',
+        r'incorrect': r'se_maoudamashii_onepoint33.ogg',
+        r'count': r'se_maoudamashii_system13.ogg',
     }
     sounds = {
         key: SoundLoader.load(os.path.join(directory, filename))
