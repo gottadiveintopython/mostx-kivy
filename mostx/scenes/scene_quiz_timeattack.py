@@ -344,7 +344,7 @@ class Manager(ScreenManager):
         quizstate = self._quizstate
         points = quizstate.num_cleared / quizstate.num_answered / (100 + quizstate.time) * 10000
         self._data.result = SmartObject(
-            points=round(points, 2),
+            points=float('{:.2f}'.format(round(points, 2))),
             num_cleared=quizstate.num_cleared,
             num_answered=quizstate.num_answered,
             time=int(quizstate.time),
