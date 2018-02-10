@@ -22,11 +22,11 @@ class MostxApp(App):
     def build(self):
         self.root = root = ScreenManager()
         self._appstate = appstate = applicationstate.create_default()
-        appstate.funcs.so_overwrite(
+        appstate.funcs.update(
             switch_screen=_create_function_switch_screen(root),
             play_sound=_create_function_play_sound(),
         )
-        appstate.data.so_overwrite(
+        appstate.data.update(
             records=applicationsettings.Records(
                 filepath=os.path.join(self.user_data_dir, r'records.json')
             ),

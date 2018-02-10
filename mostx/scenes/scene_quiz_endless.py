@@ -15,7 +15,7 @@ from kivy.uix.screenmanager import (
 
 import quizgenerator
 import customwidgets
-from smartobject import SmartObject
+from attrdict import attrdict
 
 __all__ = [r'instantiate']
 KV_CODE = r"""
@@ -334,7 +334,7 @@ class Manager(ScreenManager):
         self._random = random.Random()
         self._funcs = appstate.funcs
         self._data = appstate.data
-        self._quizstate = SmartObject(
+        self._quizstate = attrdict(
             lang_font_tuples=None,             # list of tuple(language, font_name,)
             level=None,                        # difficulty level
             num_adjectives=None,               # a parameter for quizgenerator.generate_quiz()
@@ -349,7 +349,7 @@ class Manager(ScreenManager):
             answer=None,                       # your answer of the 'quiz'
             is_correct=None,                   # was your answer collect?
         )
-        readonly_quizstate = self._quizstate.so_as_readonly()
+        quizstate = self._quizstate
         self.add_widget(Screen(name=r'blank'))
         for name, klass in {
             r'levelup': LevelupScreen,
@@ -360,7 +360,7 @@ class Manager(ScreenManager):
             self.add_widget(klass(
                 name=name,
                 appstate=appstate,
-                quizstate=readonly_quizstate))
+                quizstate=quizstate))
 
     def switch_screen(self, name, transition=NoTransition()):
         self.transition = transition
@@ -378,7 +378,7 @@ class Manager(ScreenManager):
 
     def goto_result(self, *args):
         quizstate = self._quizstate
-        self._data.result = SmartObject(
+        self._data.result = attrdict(
             num_cleared=quizstate.num_cleared,
             num_answered=quizstate.num_answered,
             languages=[lang for lang, font_name in quizstate.lang_font_tuples]
@@ -391,7 +391,7 @@ class Manager(ScreenManager):
         self._quiz_settings = data.quiz_settings.data[data.mode][
             r'debug' if data.devmode else r'release'
         ]
-        quizstate.so_overwrite(
+        quizstate.update(
             lang_font_tuples=[
                 (key, value[r'font_name'],) for key, value in
                 data.lang_settings.available_languages()
@@ -404,7 +404,7 @@ class Manager(ScreenManager):
             answer=None,
             is_correct=None,
         )
-        quizstate.so_overwrite(**self._quiz_settings[r'levels'][0])
+        quizstate.update(**self._quiz_settings[r'levels'][0])
         self.update_quiz()
         self.switch_screen(r'blank')
 
@@ -433,7 +433,7 @@ class Manager(ScreenManager):
         quizstate = self._quizstate
         if quizstate.is_correct and quizstate.num_cleared == quizstate.num_clear_to_next_level:
             quizstate.level += 1
-            quizstate.so_overwrite(**self._quiz_settings[r'levels'][quizstate.level])
+            quizstate.update(**self._quiz_settings[r'levels'][quizstate.level])
             self.update_quiz()
             self.switch_screen(r'levelup', FadeTransition())
         else:

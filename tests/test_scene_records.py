@@ -23,7 +23,6 @@ def _test():
         records.add(
             mode=r'endless',
             result={
-                r'so_name': r'record',
                 r'date': today,
                 r'num_cleared': num_cleared,
                 r'num_answered': 10,
@@ -35,7 +34,6 @@ def _test():
         records.add(
             mode=r'timeattack',
             result={
-                r'so_name': r'record',
                 r'date': today,
                 r'points': round(time * 20 / 25, 2),
                 r'num_cleared': 20,

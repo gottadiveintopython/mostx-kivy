@@ -66,7 +66,7 @@ class ResultScreen(Screen):
         else:
             place = data.records.add(
                 mode=data.mode,
-                result=result.so_to_dict())
+                result=result)
         l_other_info.text = r'Correct answer ratio ... {}/{}({:.1f}%)'.format(
             result.num_cleared,
             result.num_answered,

@@ -5,18 +5,18 @@ from kivy.uix.screenmanager import ScreenManager
 
 import beforetest
 import scenes.scene_result
-from smartobject import SmartObject
+from attrdict import attrdict
 import applicationstate
 from applicationsettings import Records
 
 
 def _test():
     appstate = applicationstate.create_default()
-    appstate.data.so_overwrite(
+    appstate.data.update(
         records=Records(filepath=r'./test_records.json'),
         devmode=False,
         mode=r'timeattack',
-        result=SmartObject(
+        result=attrdict(
             points=12.34,
             num_cleared=20,
             num_answered=37,

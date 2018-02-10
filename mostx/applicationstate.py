@@ -3,7 +3,7 @@ r'''
 アプリケーション全体を通して共有される、データ及び関数の入れ物
 '''
 
-from smartobject import SmartObject
+from attrdict import attrdict
 
 __all__ = (r'create_default',)
 
@@ -19,9 +19,8 @@ METHODS = {name: _create_dummy_method(name) for name in METHODNAMES}
 
 
 def create_default():
-    return SmartObject(
-        data=SmartObject(
-            so_name=r'applicationstate.data',
+    return attrdict(
+        data=attrdict(
             records=None,        # type: records.Records
             lang_settings=None,  # type: language_settings.LanguageSettings
             quiz_settings=None,  # type: quiz_settings.QuizSettings
@@ -29,7 +28,7 @@ def create_default():
             mode=None,           # 'timeattack' or 'endless'
             result=None          # result of the quiz
         ),
-        funcs=SmartObject(so_name=r'applicationstate.functions', **METHODS)
+        funcs=attrdict(**METHODS)
     )
 
 

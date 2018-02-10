@@ -32,7 +32,6 @@ class Records:
     def add(self, *, mode, result):
         r'新しい記録を登録する。戻り値は記録の順位(0から始まる)。ランク外だった場合は-1。'
         data = result.copy()
-        del data[r'so_name']
         data[r'date'] = datetime.date.today().isoformat()
         sort_key = {r'endless': r'num_cleared', r'timeattack': r'points'}[mode]
         rlist = self.data[mode]
@@ -57,7 +56,6 @@ def _test():
         obj.add(
             mode=r'endless',
             result={
-                r'so_name': r'record',
                 r'date': today,
                 r'num_cleared': num_cleared,
                 r'num_answered': 5
@@ -68,7 +66,6 @@ def _test():
         obj.add(
             mode=r'timeattack',
             result={
-                r'so_name': r'record',
                 r'date': today,
                 r'points': round(time * 20 / 25, 2),
                 r'num_cleared': 20,

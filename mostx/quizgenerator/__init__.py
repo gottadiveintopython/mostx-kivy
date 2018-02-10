@@ -45,7 +45,7 @@ import importlib
 import random
 import itertools
 
-from smartobject import SmartObject
+from attrdict import attrdict
 
 __all__ = [r'generate_quiz', r'languages', r'get_max_adjectives']
 
@@ -111,9 +111,8 @@ def generate_quiz(*, choices, num_adjectives, language, random_instance=random.R
     # Quizの答えを決定して、質問文(例: 最も大きのは？)を生成
     index, order = random_instance.choice(table)
     answer_index = random_instance.choice([0, -1])
-    return SmartObject(
-        so_name=r'Quiz',
+    return attrdict(
         facts=facts,
         answer=order[answer_index],
         question=langm.generate_question(index, answer_index == 0),
-        choices=choices).so_as_readonly()
+        choices=choices)

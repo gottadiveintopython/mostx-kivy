@@ -11,7 +11,7 @@ from applicationsettings import LanguageSettings, QuizSettings
 
 def _test():
     appstate = applicationstate.create_default()
-    appstate.data.so_overwrite(
+    appstate.data.update(
         lang_settings=LanguageSettings(
             filepath=r'./test_language_settings.json'
         ),
