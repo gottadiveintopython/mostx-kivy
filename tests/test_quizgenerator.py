@@ -8,7 +8,7 @@ import quizgenerator as qgen
 
 class QuizGeneratorTest(unittest.TestCase):
 
-    CHOICES = r'ABCD'
+    CHOICES = 'ABCD'
 
     def test_basic_usage(self):
         for language in qgen.languages():
@@ -35,5 +35,5 @@ class QuizGeneratorTest(unittest.TestCase):
             print(quiz)
 
 
-if __name__ == r'__main__':
+if __name__ == '__main__':
     unittest.main()

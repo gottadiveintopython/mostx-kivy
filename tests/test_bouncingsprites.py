@@ -9,7 +9,7 @@ from scenes.bouncingsprites import BouncingSprites
 
 def _test():
     root = BouncingSprites(
-        atlasfilepath=kivy.resources.resource_find(r'characters.atlas'),
+        atlasfilepath=kivy.resources.resource_find('characters.atlas'),
         size=(800, 600,)
     )
     root.start_animation()
@@ -17,5 +17,5 @@ def _test():
     runTouchApp(root)
 
 
-if __name__ == r'__main__':
+if __name__ == '__main__':
     _test()

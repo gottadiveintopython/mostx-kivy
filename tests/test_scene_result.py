@@ -13,15 +13,15 @@ from applicationsettings import Records
 def _test():
     appstate = applicationstate.create_default()
     appstate.data.update(
-        records=Records(filepath=r'./test_records.json'),
+        records=Records(filepath='./test_records.json'),
         devmode=False,
-        mode=r'timeattack',
+        mode='timeattack',
         result=attrdict(
             points=12.34,
             num_cleared=20,
             num_answered=37,
             time=123,
-            languages=[r'python'],
+            languages=['python'],
         )
     )
     root = ScreenManager()
@@ -31,5 +31,5 @@ def _test():
     runTouchApp(root)
 
 
-if __name__ == r'__main__':
+if __name__ == '__main__':
     _test()

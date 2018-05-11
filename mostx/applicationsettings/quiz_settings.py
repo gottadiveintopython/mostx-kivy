@@ -20,151 +20,151 @@ class QuizSettings:
         self.data = copy.deepcopy(DEFAULT_SETTINGS)
 
     def load(self):
-        with io.open(self._filepath, r'rt', encoding=r'utf-8') as reader:
+        with io.open(self._filepath, 'rt', encoding='utf-8') as reader:
             self.data = json.loads(reader.read(), parse_int=int, parse_constant=bool)
 
     def save(self):
-        with io.open(self._filepath, r'wt', encoding=r'utf-8') as writer:
+        with io.open(self._filepath, 'wt', encoding='utf-8') as writer:
             writer.write(json.dumps(self.data, indent=4))
 
 
 DEFAULT_SETTINGS = {
-    r'endless': {
-        r'release': {
-            r'choices': r'ABCDEFG',
-            r'time': 60,
-            r'levels': [
+    'endless': {
+        'release': {
+            'choices': 'ABCDEFG',
+            'time': 60,
+            'levels': [
                 {
-                    r'num_adjectives': 1,
-                    r'num_choices': 3,
-                    r'is_show_question_with_facts': True,
-                    r'time_increament': 10,
-                    r'num_clear_to_next_level': 5,
+                    'num_adjectives': 1,
+                    'num_choices': 3,
+                    'is_show_question_with_facts': True,
+                    'time_increament': 10,
+                    'num_clear_to_next_level': 5,
                 },
                 {
-                    r'num_choices': 4,
-                    r'time_increament': 15,
-                    r'num_clear_to_next_level': 10,
+                    'num_choices': 4,
+                    'time_increament': 15,
+                    'num_clear_to_next_level': 10,
                 },
                 {
-                    r'num_adjectives': 2,
-                    r'time_increament': 20,
-                    r'num_clear_to_next_level': 15,
+                    'num_adjectives': 2,
+                    'time_increament': 20,
+                    'num_clear_to_next_level': 15,
                 },
                 {
-                    r'num_adjectives': 1,
-                    r'num_choices': 3,
-                    r'is_show_question_with_facts': False,
-                    r'num_clear_to_next_level': 25,
+                    'num_adjectives': 1,
+                    'num_choices': 3,
+                    'is_show_question_with_facts': False,
+                    'num_clear_to_next_level': 25,
                 },
                 {
-                    r'num_adjectives': 2,
-                    r'time_increament': 30,
-                    r'num_clear_to_next_level': 35,
+                    'num_adjectives': 2,
+                    'time_increament': 30,
+                    'num_clear_to_next_level': 35,
                 },
                 {
-                    r'num_choices': 4,
-                    r'time_increament': 60,
-                    r'num_clear_to_next_level': -1,
+                    'num_choices': 4,
+                    'time_increament': 60,
+                    'num_clear_to_next_level': -1,
                 },
             ],
         },
-        r'debug': {
-            r'choices': r'ABCDEFG',
-            r'time': 30,
-            r'levels': [
+        'debug': {
+            'choices': 'ABCDEFG',
+            'time': 30,
+            'levels': [
                 {
-                    r'num_adjectives': 1,
-                    r'num_choices': 3,
-                    r'is_show_question_with_facts': True,
-                    r'time_increament': 10,
-                    r'num_clear_to_next_level': 1,
+                    'num_adjectives': 1,
+                    'num_choices': 3,
+                    'is_show_question_with_facts': True,
+                    'time_increament': 10,
+                    'num_clear_to_next_level': 1,
                 },
                 {
-                    r'num_choices': 4,
-                    r'time_increament': 15,
-                    r'num_clear_to_next_level': 2,
+                    'num_choices': 4,
+                    'time_increament': 15,
+                    'num_clear_to_next_level': 2,
                 },
                 {
-                    r'num_adjectives': 2,
-                    r'time_increament': 20,
-                    r'num_clear_to_next_level': 3,
+                    'num_adjectives': 2,
+                    'time_increament': 20,
+                    'num_clear_to_next_level': 3,
                 },
                 {
-                    r'num_adjectives': 1,
-                    r'num_choices': 3,
-                    r'is_show_question_with_facts': False,
-                    r'num_clear_to_next_level': 4,
+                    'num_adjectives': 1,
+                    'num_choices': 3,
+                    'is_show_question_with_facts': False,
+                    'num_clear_to_next_level': 4,
                 },
                 {
-                    r'num_adjectives': 2,
-                    r'time_increament': 30,
-                    r'num_clear_to_next_level': 5,
+                    'num_adjectives': 2,
+                    'time_increament': 30,
+                    'num_clear_to_next_level': 5,
                 },
                 {
-                    r'num_choices': 4,
-                    r'time_increament': 60,
-                    r'num_clear_to_next_level': -1,
+                    'num_choices': 4,
+                    'time_increament': 60,
+                    'num_clear_to_next_level': -1,
                 },
             ],
         },
     },
-    r'timeattack': {
-        r'release': {
-            r'choices': r'ABCDEFG',
-            r'levels': [
+    'timeattack': {
+        'release': {
+            'choices': 'ABCDEFG',
+            'levels': [
                 {
-                    r'num_adjectives': 1,
-                    r'num_choices': 3,
-                    r'is_show_question_with_facts': True,
-                    r'num_clear_to_next_level': 5,
+                    'num_adjectives': 1,
+                    'num_choices': 3,
+                    'is_show_question_with_facts': True,
+                    'num_clear_to_next_level': 5,
                 },
                 {
-                    r'num_choices': 4,
-                    r'num_clear_to_next_level': 10,
+                    'num_choices': 4,
+                    'num_clear_to_next_level': 10,
                 },
                 {
-                    r'num_adjectives': 2,
-                    r'num_clear_to_next_level': 15,
+                    'num_adjectives': 2,
+                    'num_clear_to_next_level': 15,
                 },
                 {
-                    r'num_adjectives': 1,
-                    r'num_choices': 3,
-                    r'is_show_question_with_facts': False,
-                    r'num_clear_to_next_level': 19,
+                    'num_adjectives': 1,
+                    'num_choices': 3,
+                    'is_show_question_with_facts': False,
+                    'num_clear_to_next_level': 19,
                 },
                 {
-                    r'num_adjectives': 2,
-                    r'num_clear_to_next_level': 20,
+                    'num_adjectives': 2,
+                    'num_clear_to_next_level': 20,
                 },
             ],
         },
-        r'debug': {
-            r'choices': r'ABCDEFG',
-            r'levels': [
+        'debug': {
+            'choices': 'ABCDEFG',
+            'levels': [
                 {
-                    r'num_adjectives': 1,
-                    r'num_choices': 3,
-                    r'is_show_question_with_facts': True,
-                    r'num_clear_to_next_level': 1,
+                    'num_adjectives': 1,
+                    'num_choices': 3,
+                    'is_show_question_with_facts': True,
+                    'num_clear_to_next_level': 1,
                 },
                 {
-                    r'num_choices': 4,
-                    r'num_clear_to_next_level': 2,
+                    'num_choices': 4,
+                    'num_clear_to_next_level': 2,
                 },
                 {
-                    r'num_adjectives': 2,
-                    r'num_clear_to_next_level': 3,
+                    'num_adjectives': 2,
+                    'num_clear_to_next_level': 3,
                 },
                 {
-                    r'num_adjectives': 1,
-                    r'num_choices': 3,
-                    r'is_show_question_with_facts': False,
-                    r'num_clear_to_next_level': 4,
+                    'num_adjectives': 1,
+                    'num_choices': 3,
+                    'is_show_question_with_facts': False,
+                    'num_clear_to_next_level': 4,
                 },
                 {
-                    r'num_adjectives': 3,
-                    r'num_clear_to_next_level': 5,
+                    'num_adjectives': 3,
+                    'num_clear_to_next_level': 5,
                 },
             ],
         },

@@ -8,27 +8,27 @@ from kivy.uix.screenmanager import Screen
 import customwidgets
 
 
-__all__ = (r'instantiate',)
+__all__ = ('instantiate',)
 KV_CODE = r"""
 <ResultScreen>:
-    name: r'result'
+    name: 'result'
     AutoLabel:
         id: l_mode
         size_hint: 0.4, 0.1
-        pos_hint: {r'center_x': 0.5, r'y': 0.85}
+        pos_hint: {'center_x': 0.5, 'y': 0.85}
         color: [0.5, 0.5, 0.5, 1]
     AutoLabel:
         id: l_points
         size_hint: 0.9, 0.3
-        pos_hint: {r'center_x': 0.5, r'y': 0.55}
+        pos_hint: {'center_x': 0.5, 'y': 0.55}
     AutoLabel:
         id: l_other_info
         size_hint: 0.9, 0.28
-        pos_hint: {r'center_x': 0.5, r'y': 0.26}
+        pos_hint: {'center_x': 0.5, 'y': 0.26}
     AutoLabel:
         id: l_nth_place
         size_hint: 0.5, 0.2
-        pos_hint: {r'x': 0.4, r'y': 0.05}
+        pos_hint: {'x': 0.4, 'y': 0.05}
         color: [0.8, 0.8, 0.2, 1]
 """
 customwidgets.do_nothing()
@@ -37,7 +37,7 @@ customwidgets.do_nothing()
 def _format_time(time):
     minutes = time // 60
     seconds = time % 60
-    return r'{:02}:{:02}'.format(minutes, seconds)
+    return '{:02}:{:02}'.format(minutes, seconds)
 
 
 class ResultScreen(Screen):
@@ -49,7 +49,7 @@ class ResultScreen(Screen):
         self._color_flag = False
 
     def on_touch_down(self, touch):
-        self._funcs.switch_screen(r'title')
+        self._funcs.switch_screen('title')
         return True
 
     def on_pre_enter(self):
@@ -67,16 +67,16 @@ class ResultScreen(Screen):
             place = data.records.add(
                 mode=data.mode,
                 result=result)
-        l_other_info.text = r'Correct answer ratio ... {}/{}({:.1f}%)'.format(
+        l_other_info.text = 'Correct answer ratio ... {}/{}({:.1f}%)'.format(
             result.num_cleared,
             result.num_answered,
             (float(result.num_cleared) / result.num_answered * 100) if result.num_answered != 0 else 0)
-        if data.mode == r'endless':
-            l_mode.text = r'Endless Mode'
-            l_points.text = r'   {} Quizzes'.format(result.num_cleared)
-        elif data.mode == r'timeattack':
-            l_mode.text = r'Time Attack Mode'
-            l_points.text = r'   {:.2f} pts'.format(result.points)
+        if data.mode == 'endless':
+            l_mode.text = 'Endless Mode'
+            l_points.text = '   {} Quizzes'.format(result.num_cleared)
+        elif data.mode == 'timeattack':
+            l_mode.text = 'Time Attack Mode'
+            l_points.text = '   {:.2f} pts'.format(result.points)
             l_other_info.text += "\nTime ... {}".format(
                 _format_time(result.time))
         if data.devmode or place < 0:
@@ -88,16 +88,16 @@ class ResultScreen(Screen):
                 1
             )
             if place == 0:
-                l_nth_place.text = r'New Record'
-                funcs.play_sound(r'newrecord')
+                l_nth_place.text = 'New Record'
+                funcs.play_sound('newrecord')
             else:
                 if place == 1:
-                    l_nth_place.text = r'2nd place'
+                    l_nth_place.text = '2nd place'
                 elif place == 2:
-                    l_nth_place.text = r'3rd place'
+                    l_nth_place.text = '3rd place'
                 else:
-                    l_nth_place.text = str(place) + r'th place'
-                funcs.play_sound(r'rank-in')
+                    l_nth_place.text = str(place) + 'th place'
+                funcs.play_sound('rank-in')
 
     def on_pre_leave(self):
         Clock.unschedule(self.color_callback)

@@ -18,5 +18,5 @@ def _test():
     runTouchApp(root)
 
 
-if __name__ == r'__main__':
+if __name__ == '__main__':
     _test()

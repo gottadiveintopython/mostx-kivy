@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
-r'''
+'''
 アプリケーション全体を通して共有される、データ及び関数の入れ物
 '''
 
 from attrdict import attrdict
 
-__all__ = (r'create_default',)
+__all__ = ('create_default',)
 
 
 def _create_dummy_method(name):
     def method(*args, **kwargs):
-        print(r'----------------------', name, args, kwargs, sep='\n')
+        print('----------------------', name, args, kwargs, sep='\n')
     return method
 
 
-METHODNAMES = r'play_sound switch_screen'.split()
+METHODNAMES = 'play_sound switch_screen'.split()
 METHODS = {name: _create_dummy_method(name) for name in METHODNAMES}
 
 
@@ -37,9 +37,9 @@ def _test():
     print(obj.data)
     funcs = obj.funcs
     print(funcs)
-    funcs.play_sound(r'arg', key=r'value')
-    funcs.switch_screen(r'arg', key=r'value')
+    funcs.play_sound('arg', key='value')
+    funcs.switch_screen('arg', key='value')
 
 
-if __name__ == r'__main__':
+if __name__ == '__main__':
     _test()

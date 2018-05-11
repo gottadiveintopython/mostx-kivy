@@ -6,7 +6,7 @@ from kivy.properties import NumericProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import Screen, NoTransition
 
-__all__ = (r'instantiate',)
+__all__ = ('instantiate',)
 KV_CODE = r"""
 <Countdown>:
     seconds: 0
@@ -34,15 +34,15 @@ KV_CODE = r"""
         text: root.text
         font_size: min(*self.size)
         size_hint: 1, 1
-        pos_hint: {r'x': 0, r'y': 0}
+        pos_hint: {'x': 0, 'y': 0}
 <CountdownScreen>:
-    name: r'countdown'
+    name: 'countdown'
     child_width: min(*self.size) * 0.9
     Countdown:
         id: countdown
         size_hint: None, None
         size: root.child_width, root.child_width
-        pos_hint: {r'center_x': 0.5, r'center_y': 0.5}
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         seconds: root.seconds
 """
 
@@ -66,7 +66,7 @@ class CountdownScreen(Screen):
     def on_pre_enter(self):
         self.seconds = 3
         assert self._bind_id is None
-        self._bind_id = self.ids.countdown.fbind(r'text', self.on_child_text)
+        self._bind_id = self.ids.countdown.fbind('text', self.on_child_text)
 
     def on_enter(self):
         # Clock.schedule_once(
@@ -77,7 +77,7 @@ class CountdownScreen(Screen):
 
     def on_pre_leave(self):
         assert self._bind_id is not None
-        self.ids.countdown.unbind_uid(r'text', self._bind_id)
+        self.ids.countdown.unbind_uid('text', self._bind_id)
         self._bind_id = None
 
     def callback_animate(self, dt):
@@ -85,13 +85,13 @@ class CountdownScreen(Screen):
         if self.seconds <= 0:
             self.seconds = 0
             self._appstate.funcs.switch_screen(
-                r'quiz_' + self._appstate.data.mode,
+                'quiz_' + self._appstate.data.mode,
                 NoTransition()
             )
             return False
 
     def on_child_text(self, widget, value):
-        self._appstate.funcs.play_sound(r'count')
+        self._appstate.funcs.play_sound('count')
 
 
 def instantiate(**kwargs):

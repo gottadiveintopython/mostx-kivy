@@ -15,31 +15,31 @@ from applicationsettings import Records
 def _test():
     appstate = applicationstate.create_default()
     appstate.data.records = records = Records(
-        filepath=r'./test_records.json'
+        filepath='./test_records.json'
     )
     today = datetime.date.today().isoformat()
     for i in range(3):
         num_cleared = random.randrange(1, 10)
         records.add(
-            mode=r'endless',
+            mode='endless',
             result={
-                r'date': today,
-                r'num_cleared': num_cleared,
-                r'num_answered': 10,
-                r'languages': r'japanese chinese'.split(),
+                'date': today,
+                'num_cleared': num_cleared,
+                'num_answered': 10,
+                'languages': 'japanese chinese'.split(),
             }
         )
     for i in range(3):
         time = random.randrange(1, 40)
         records.add(
-            mode=r'timeattack',
+            mode='timeattack',
             result={
-                r'date': today,
-                r'points': round(time * 20 / 25, 2),
-                r'num_cleared': 20,
-                r'num_answered': 25,
-                r'time': time,
-                r'languages': r'japanese korean'.split(),
+                'date': today,
+                'points': round(time * 20 / 25, 2),
+                'num_cleared': 20,
+                'num_answered': 25,
+                'time': time,
+                'languages': 'japanese korean'.split(),
             }
         )
     root = ScreenManager()
@@ -50,5 +50,5 @@ def _test():
     appstate.data.records.save()
 
 
-if __name__ == r'__main__':
+if __name__ == '__main__':
     _test()

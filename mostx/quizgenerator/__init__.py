@@ -13,12 +13,12 @@ Which is the slowest one?
 
 import quizgenerator
 
-list(quizgenerator.languages()) # => [r'chinese', r'english', r'korean', r'japanese']
+list(quizgenerator.languages()) # => ['chinese', 'english', 'korean', 'japanese']
 
 quiz = quizgenerator.generate_quiz(
-    choices=r'ABC',
+    choices='ABC',
     num_adjectives=1,
-    language=r'english')
+    language='english')
 print(quiz)
 # Quiz
 #   facts : ['B is slower than A', 'A is faster than C', 'B is faster than C']
@@ -27,9 +27,9 @@ print(quiz)
 #   answer : C
 
 quiz = quizgenerator.generate_quiz(
-    choices=[r'Onion', r'Cabbage', r'Cucumber'],
+    choices=['Onion', 'Cabbage', 'Cucumber'],
     num_adjectives=2,
-    language=r'english')
+    language='english')
 print(quiz)
 # Quiz
 #   facts :
@@ -47,26 +47,26 @@ import itertools
 
 from attrdict import attrdict
 
-__all__ = [r'generate_quiz', r'languages', r'get_max_adjectives']
+__all__ = ['generate_quiz', 'languages', 'get_max_adjectives']
 
 
-LANGS = r'japanese korean chinese english'.split()
-langm_dict = {lang: importlib.import_module(r'.l_' + lang, r'quizgenerator') for lang in LANGS}
+LANGS = 'japanese korean chinese english'.split()
+langm_dict = {lang: importlib.import_module('.l_' + lang, 'quizgenerator') for lang in LANGS}
 MAX_ADJECTIVES = min([langm.get_num_adjectives() for langm in langm_dict.values()])
 
 
 def languages():
-    r'"generate_quiz"の"language"引数に使える値を挙げるIterable'
+    '''"generate_quiz"の"language"引数に使える値を挙げるIterable'''
     return LANGS
 
 
 def get_max_adjectives():
-    r'"generate_quiz"の"num_adjectives"引数の最大値'
+    '''"generate_quiz"の"num_adjectives"引数の最大値'''
     return MAX_ADJECTIVES
 
 
 def generate_quiz(*, choices, num_adjectives, language, random_instance=random.Random()):
-    r'''Quizを作るMethod
+    '''Quizを作るMethod
 
     choices          ... 答えの選択肢を2つ以上挙げてくれるIterable
     num_adjectives   ... 問題文に使用する形容詞の数。この値は1からget_max_adjectives()の範囲である必要がある

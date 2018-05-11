@@ -9,10 +9,10 @@ import quizgenerator
 import customwidgets
 from .fontchooser import FontChooserPopup
 
-__all__ = [r'instantiate']
+__all__ = ('instantiate', )
 KV_CODE = r"""
 <LanguageSettingsRow>:
-    orientation: r'horizontal'
+    orientation: 'horizontal'
     padding: 5, 1
     spacing: 2
     language:
@@ -36,14 +36,14 @@ KV_CODE = r"""
         size_hint_x: 0.4
     Button:
         id: b_choose
-        text: r'click to choose font'
+        text: 'click to choose font'
         background_color: [0.2, 0.2, 0.2, 1]
         font_size: self.height * 0.9
         size_hint_x: 0.5
         on_release: root.choose_font()
 
 <LanguageSettingsScreen>:
-    name: r'language_settings'
+    name: 'language_settings'
     canvas.before:
         Color:
             rgb: 0.5, 0.2, 0.6
@@ -52,7 +52,7 @@ KV_CODE = r"""
             width: 1
     ScrollView:
         size_hint: 0.9, 0.76
-        pos_hint: {r'center_x': 0.5, r'y': 0.12}
+        pos_hint: {'center_x': 0.5, 'y': 0.12}
         GridLayout:
             id: id_layout
             size_hint: 1, None
@@ -63,8 +63,8 @@ KV_CODE = r"""
             spacing: 30
     RoundedButton:
         size_hint: 0.9, 0.09
-        pos_hint: {r'center_x': 0.5, r'center_y': 0.1}
-        text: r'Back'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+        text: 'Back'
         on_release: root.goto_menu()
 """
 
@@ -83,7 +83,7 @@ class LanguageSettingsRow(BoxLayout):
         popup = FontChooserPopup(
             sample_text=self.sample_text,
             font_name=self.font_name)
-        popup.bind(font_name=self.setter(r'font_name'))
+        popup.bind(font_name=self.setter('font_name'))
         popup.open()
 
 
@@ -96,16 +96,16 @@ class LanguageSettingsScreen(Screen):
         layout = self.ids.id_layout
         for language, params in self._data.lang_settings.data.items():
             row = LanguageSettingsRow(language=language)
-            row.enable = params[r'enable']
+            row.enable = params['enable']
             quiz = quizgenerator.generate_quiz(
                 language=language,
-                choices=r'ABC',
+                choices='ABC',
                 num_adjectives=2)
             temp = quiz.facts[:]
             temp.append(quiz.question)
             row.sample_text = '\n'.join(temp)
-            font_name = params[r'font_name']
-            if font_name and font_name != r'':
+            font_name = params['font_name']
+            if font_name and font_name != '':
                 row.font_name = font_name
             layout.add_widget(row)
 
@@ -119,12 +119,12 @@ class LanguageSettingsScreen(Screen):
 
     def goto_menu(self):
         funcs = self._funcs
-        funcs.play_sound(r'bween')
+        funcs.play_sound('bween')
         num_languages_available = 0
         is_invalid = False
         for child in self.ids.id_layout.children:
             if child.enable:
-                if child.font_name == r'':
+                if child.font_name == '':
                     is_invalid = True
                     break
                 else:
@@ -136,7 +136,7 @@ class LanguageSettingsScreen(Screen):
             popup.open()
         else:
             self.apply_settings()
-            funcs.switch_screen(r'menu', FadeTransition())
+            funcs.switch_screen('menu', FadeTransition())
 
 
 def instantiate(**kwargs):

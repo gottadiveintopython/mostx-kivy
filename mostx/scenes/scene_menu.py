@@ -5,12 +5,12 @@ from kivy.uix.screenmanager import Screen, FadeTransition
 
 import customwidgets
 
-__all__ = (r'instantiate',)
+__all__ = ('instantiate',)
 KV_CODE = r"""
 <MenuItem@BorderedButton>:
 
 <MenuScreen>:
-    name: r'menu'
+    name: 'menu'
     ScrollView:
         GridLayout:
             size_hint: 1, None
@@ -21,22 +21,22 @@ KV_CODE = r"""
             padding: [50, 30]
             spacing: 40
             MenuItem:
-                text: r'Play Endless Mode'
-                on_release: root.goto_quiz(r'endless')
+                text: 'Play Endless Mode'
+                on_release: root.goto_quiz('endless')
             MenuItem:
-                text: r'Play TimeAttack Mode'
-                on_release: root.goto_quiz(r'timeattack')
+                text: 'Play TimeAttack Mode'
+                on_release: root.goto_quiz('timeattack')
             MenuItem:
-                text: r'View Records'
+                text: 'View Records'
                 on_release: root.goto_records()
             MenuItem:
-                text: r'Language Settings'
+                text: 'Language Settings'
                 on_release: root.goto_language_settings()
             MenuItem:
-                text: r'Credits'
+                text: 'Credits'
                 on_release: root.goto_credits()
             MenuItem:
-                text: r'Back to title'
+                text: 'Back to title'
                 on_release: root.goto_title()
 """
 customwidgets.do_nothing()
@@ -51,29 +51,29 @@ class MenuScreen(Screen):
 
     def goto_quiz(self, mode):
         self._data.mode = mode
-        self._funcs.play_sound(r'bween')
-        self._funcs.switch_screen(r'countdown', FadeTransition(duration=1))
+        self._funcs.play_sound('bween')
+        self._funcs.switch_screen('countdown', FadeTransition(duration=1))
 
     def goto_records(self):
-        self._funcs.play_sound(r'bween')
+        self._funcs.play_sound('bween')
         self._funcs.switch_screen(
-            r'records',
+            'records',
             transition=FadeTransition(duration=.4)
         )
 
     def goto_title(self):
         self._funcs.switch_screen(
-            r'title',
+            'title',
             transition=FadeTransition(duration=.6)
         )
 
     def goto_credits(self):
-        self._funcs.play_sound(r'bween')
-        self._funcs.switch_screen(r'credits', FadeTransition())
+        self._funcs.play_sound('bween')
+        self._funcs.switch_screen('credits', FadeTransition())
 
     def goto_language_settings(self):
-        self._funcs.play_sound(r'bween')
-        self._funcs.switch_screen(r'language_settings', FadeTransition())
+        self._funcs.play_sound('bween')
+        self._funcs.switch_screen('language_settings', FadeTransition())
 
 
 def instantiate(**kwargs):

@@ -12,7 +12,7 @@ class TestApp(App):
 
     def build(self):
         appstate = applicationstate.create_default()
-        appstate.data.mode = r'endless'
+        appstate.data.mode = 'endless'
         self.root = root = ScreenManager()
         root.add_widget(Screen())
         root.add_widget(
@@ -21,8 +21,8 @@ class TestApp(App):
         return root
 
     def on_start(self):
-        self.root.current = r'countdown'
+        self.root.current = 'countdown'
 
 
-if __name__ == r'__main__':
+if __name__ == '__main__':
     TestApp().run()

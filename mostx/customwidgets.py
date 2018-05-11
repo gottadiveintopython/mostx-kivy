@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-r'''
+'''
 このModuleではアプリケーション内の色んな所から利用されるWidgetを定義している。
 
 ----------------------------------------------------------------------------
@@ -7,7 +7,7 @@ r'''
 
 import customwidgets
 
-label = customwidgets.Autolabel(text=r'test')
+label = customwidgets.Autolabel(text='test')
 ----------------------------------------------------------------------------
 Widget一覧
 
@@ -32,12 +32,12 @@ from kivy.properties import (
     NumericProperty, StringProperty
 )
 
-kivy.require(r'1.9.1')
+kivy.require('1.9.1')
 
 __all__ = [
-    r'do_nothing', r'AutoLabel', r'BorderlessButton', r'BorderedButton',
-    r'RoundedButton', r'ImageButton', r'MessagePopup', r'YesNoPopup',
-    r'ClockLabel'
+    'do_nothing', 'AutoLabel', 'BorderlessButton', 'BorderedButton',
+    'RoundedButton', 'ImageButton', 'MessagePopup', 'YesNoPopup',
+    'ClockLabel'
 ]
 
 
@@ -58,7 +58,7 @@ Builder.load_string(r"""
     border_width: 1
     canvas.before:
         Color:
-            rgba: BUTTON_NORMAL_BG_COLOR if self.state == r'normal' else BUTTON_DOWN_BG_COLOR
+            rgba: BUTTON_NORMAL_BG_COLOR if self.state == 'normal' else BUTTON_DOWN_BG_COLOR
         Rectangle:
             pos: self.pos
             size: self.size
@@ -80,7 +80,7 @@ Builder.load_string(r"""
             pos: self.pos
             size: self.size
         Color:
-            rgba: BUTTON_NORMAL_BG_COLOR if self.state == r'normal' else BUTTON_DOWN_BG_COLOR
+            rgba: BUTTON_NORMAL_BG_COLOR if self.state == 'normal' else BUTTON_DOWN_BG_COLOR
         RoundedRectangle:
             segments: 6
             pos: self.x + self.border_width, self.y + self.border_width
@@ -94,29 +94,29 @@ Builder.load_string(r"""
     AutoLabel:
         text: root.text
         size_hint: 0.96, 0.96
-        pos_hint: {r'center_x': 0.5, r'center_y': 0.5}
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
 <YesNoPopup>:
     auto_dismiss: False
     BoxLayout:
-        orientation: r'vertical'
+        orientation: 'vertical'
         padding: 20
         spacing: 20
         AutoLabel:
             size_hint_y: 0.8
             text: root.text
             size_hint: 0.96, 0.88
-            pos_hint: {r'center_x': 0.5, r'top': 1}
+            pos_hint: {'center_x': 0.5, 'top': 1}
         BoxLayout:
             size_hint_y: 0.2
-            orientation: r'horizontal'
+            orientation: 'horizontal'
             spacing: 20
             RoundedButton:
                 text: root.text_yes
-                on_release: root.dispatch(r'on_yes')
+                on_release: root.dispatch('on_yes')
             RoundedButton:
                 text: root.text_no
-                on_release: root.dispatch(r'on_no')
+                on_release: root.dispatch('on_no')
 
 <ClockLabel>:
     seconds: 0
@@ -124,7 +124,7 @@ Builder.load_string(r"""
 
 
 def do_nothing():
-    r'''
+    '''
 この関数は名前通り何もしない。IDEの出す次の類の警告
 
 'customwidgets' imported but unused.
@@ -153,7 +153,7 @@ def _adjust_font_size(label, *, scaling=1.0):
     texture_height = label.texture_size[1]
     widget_width = label.width
     widget_height = label.height
-    if label.text == r'' or texture_width == 0 or texture_height == 0 or widget_width == 0 or widget_height == 0:
+    if label.text == '' or texture_width == 0 or texture_height == 0 or widget_width == 0 or widget_height == 0:
         return
     texture_aspect_ratio = texture_width / texture_height
     widget_aspect_ratio = widget_width / widget_height
@@ -165,7 +165,7 @@ def _adjust_font_size(label, *, scaling=1.0):
 
 
 class AutoLabel(Label):
-    r'''font_sizeを自動調節するLabel'''
+    '''font_sizeを自動調節するLabel'''
 
     adjust_font_size_scaling = NumericProperty(1)
 
@@ -192,13 +192,13 @@ class AutoLabel(Label):
 
 
 class BorderedButton(ButtonBehavior, AutoLabel):
-    r'''四角い枠付きのButton(font_sizeは自動調節)'''
+    '''四角い枠付きのButton(font_sizeは自動調節)'''
 
     border_width = NumericProperty(1)
 
 
 class RoundedButton(ButtonBehavior, AutoLabel):
-    r'''角の丸い枠付きのButton(font_sizeは自動調節)'''
+    '''角の丸い枠付きのButton(font_sizeは自動調節)'''
     border_width = NumericProperty(2)
 
 
@@ -210,13 +210,13 @@ class MessagePopup(ModalView):
 class YesNoPopup(ModalView):
 
     text = StringProperty()
-    text_yes = StringProperty(r'Yes')
-    text_no = StringProperty(r'No')
+    text_yes = StringProperty('Yes')
+    text_no = StringProperty('No')
 
     def __init__(self, **kwargs):
         super(YesNoPopup, self).__init__(**kwargs)
-        self.register_event_type(r'on_yes')
-        self.register_event_type(r'on_no')
+        self.register_event_type('on_yes')
+        self.register_event_type('on_no')
 
     def on_yes(self):
         self.dismiss()
@@ -231,7 +231,7 @@ class ClockLabel(AutoLabel):
     def on_seconds(self, widget, value):
         minutes = int(value // 60)
         seconds = int(value % 60)
-        self.text = r'{:02}:{:02}'.format(minutes, seconds)
+        self.text = '{:02}:{:02}'.format(minutes, seconds)
 
 
 BorderlessButton = Factory.BorderlessButton
@@ -240,26 +240,26 @@ ImageButton = Factory.ImageButton
 
 def _test():
     from kivy.base import runTouchApp
-    yesno_popup = YesNoPopup(text=r'Yes No Popup', size_hint=(0.95, 0.95,))
+    yesno_popup = YesNoPopup(text='Yes No Popup', size_hint=(0.95, 0.95,))
     yesno_popup.bind(
-        on_yes=(lambda *args: print(r'# on_yes')),
-        on_no=(lambda *args: print(r'# on_no'))
+        on_yes=(lambda *args: print('# on_yes')),
+        on_no=(lambda *args: print('# on_no'))
     )
-    msg_popup = MessagePopup(text=r'Message Popup', size_hint=(0.95, 0.95,))
+    msg_popup = MessagePopup(text='Message Popup', size_hint=(0.95, 0.95,))
     root = Builder.load_string(r"""
 GridLayout:
     cols: 3
     spacing: 10
     padding: 20
     AutoLabel:
-        text: r'AutoLabel'
+        text: 'AutoLabel'
     RoundedButton:
         id: button_yesno_popup
         text: 'RoundButton\n(open YesNoPopup)'
         border_width: 4
     BorderlessButton:
-        text: r'BorderlessButton'
-        on_press: print(r'BorderlessButton pressed.')
+        text: 'BorderlessButton'
+        on_press: print('BorderlessButton pressed.')
     BorderedButton:
         id: button_msg_popup
         text: 'BorderedButton\n(open MessagePopup)'
@@ -274,21 +274,21 @@ GridLayout:
             padding: 10
             spacing: 10
             BorderedButton:
-                text: r'Apple'
+                text: 'Apple'
             BorderedButton:
-                text: r'Banana'
+                text: 'Banana'
             BorderedButton:
-                text: r'Cucumber'
+                text: 'Cucumber'
             BorderedButton:
-                text: r'Donut'
+                text: 'Donut'
             BorderedButton:
-                text: r'Eggplant'
+                text: 'Eggplant'
             BorderedButton:
-                text: r'FurikakeGohan'
+                text: 'FurikakeGohan'
     FloatLayout:
         ImageButton:
-            pos_hint: {r'center_x': 0.5, r'center_y': 0.5}
-            source: r'./data/image/menu_button.png'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            source: './data/image/menu_button.png'
             size: self.texture.size
 """)
     root.ids.button_yesno_popup.bind(on_release=yesno_popup.open)
@@ -296,5 +296,5 @@ GridLayout:
     runTouchApp(root)
 
 
-if __name__ == r'__main__':
+if __name__ == '__main__':
     _test()

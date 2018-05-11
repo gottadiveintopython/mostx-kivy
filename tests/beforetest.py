@@ -5,11 +5,11 @@ import kivy.resources
 
 sys.path.insert(
     0,
-    os.path.join(os.path.pardir, r'mostx')
+    os.path.join(os.path.pardir, 'mostx')
 )
 kivy.resources.resource_add_path(
-    os.path.join(os.path.pardir, r'mostx', r'data', r'image')
+    os.path.join(os.path.pardir, 'mostx', 'data', 'image')
 )
 kivy.resources.resource_add_path(
-    os.path.join(os.path.pardir, r'mostx', r'data', r'text')
+    os.path.join(os.path.pardir, 'mostx', 'data', 'text')
 )

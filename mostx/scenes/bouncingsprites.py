@@ -9,9 +9,9 @@ from kivy.uix.image import Image
 from kivy.atlas import Atlas
 from random import random
 
-kivy.require(r'1.9.1')
+kivy.require('1.9.1')
 
-__all__ = (r'BouncingSprites',)
+__all__ = ('BouncingSprites',)
 
 
 class Sprite(Scatter):

@@ -9,7 +9,7 @@ from kivy.uix.screenmanager import (
 import customwidgets
 from applicationsettings import Records
 
-__all__ = [r'instantiate']
+__all__ = ('instantiate', )
 KV_CODE = r"""
 #:set LINE_WIDTH 10
 
@@ -20,8 +20,8 @@ KV_CODE = r"""
         Color:
             rgba: self.color
         Line:
-            cap: r'none'
-            joint: r'round'
+            cap: 'none'
+            joint: 'round'
             close: True
             width: LINE_WIDTH
             points: self.points
@@ -40,33 +40,33 @@ KV_CODE = r"""
     CustomScreenManager:
         id: label_screenmanager
         size_hint: 0.3, 0.05
-        pos_hint: {r'x': 0.01, r'top': 0.99}
+        pos_hint: {'x': 0.01, 'top': 0.99}
     RoundedButton:
-        text: r'Back to the Menu'
+        text: 'Back to the Menu'
         size_hint: 0.3, 0.1
-        pos_hint: {r'right': 0.98, r'y': 0.03}
+        pos_hint: {'right': 0.98, 'y': 0.03}
         on_release: root.goto_menu()
     RoundedButton:
-        text: r'Clear Records'
+        text: 'Clear Records'
         size_hint: 0.3, 0.1
-        pos_hint: {r'x': 0.02, r'y': 0.03}
+        pos_hint: {'x': 0.02, 'y': 0.03}
         on_release: root.clear_records_after_confirmation()
     TriangleRight:
         color: root._tcolor
         size_hint: None, None
         size: root._tw, root._tw
-        pos_hint: {r'right': 0.99, r'center_y': 0.5}
+        pos_hint: {'right': 0.99, 'center_y': 0.5}
         on_release: root.page_right()
     TriangleLeft:
         color: root._tcolor
         size_hint: None, None
         size: root._tw, root._tw
-        pos_hint: {r'x': 0.01, r'center_y': 0.5}
+        pos_hint: {'x': 0.01, 'center_y': 0.5}
         on_release: root.page_left()
     CustomScreenManager:
         id: record_list_screenmanager
         size_hint: 0.8, 0.7
-        pos_hint: {r'center_x': 0.5, r'center_y': 0.5}
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
 <RecordList>:
     ScrollView:
@@ -86,18 +86,18 @@ KV_CODE = r"""
     AutoLabel:
         id: main
         size_hint: 0.9, 0.9
-        pos_hint: {r'center_x': 0.5, r'center_y': 0.5}
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
 <Manager>:
 """
 
-MODES = [r'endless', r'timeattack']
+MODES = ['endless', 'timeattack']
 
 
 def _format_time(time):
     minutes = time // 60
     seconds = time % 60
-    return r'{:02}:{:02}'.format(minutes, seconds)
+    return '{:02}:{:02}'.format(minutes, seconds)
 
 
 class CustomScreenManager(ScreenManager):
@@ -124,29 +124,29 @@ class RecordList(Screen):
     def update(self):
         mode = self.name
         rlist = self._data.records.data[mode]
-        if mode == r'timeattack':
+        if mode == 'timeattack':
             for button, record in zip(self._buttons, rlist):
                 button.record = record
-                button.text = r'{: >6.2f} pts   {: >10}'.format(
-                    record[r'points'],
-                    record[r'date']
+                button.text = '{: >6.2f} pts   {: >10}'.format(
+                    record['points'],
+                    record['date']
                 )
-        elif mode == r'endless':
+        elif mode == 'endless':
             for button, record in zip(self._buttons, rlist):
                 button.record = record
-                button.text = r'{: >6} quizzes   {: >10}'.format(
-                    record[r'num_cleared'],
-                    record[r'date']
+                button.text = '{: >6} quizzes   {: >10}'.format(
+                    record['num_cleared'],
+                    record['date']
                 )
         for i in range(Records.MAX_RECORDS - len(rlist)):
             button = self._buttons[-1 - i]
             button.record = None
-            button.text = r'------------'
+            button.text = '------------'
 
     def open_detail(self, button):
         record = button.record
         if record is None:
-            self._funcs.play_sound(r'ti')
+            self._funcs.play_sound('ti')
         else:
             self.manager.parent.open_detail(mode=self.name, record=record)
 
@@ -191,37 +191,37 @@ class MainScreen(Screen):
         Clock.schedule_once(self.change_to_tcolor1, self.FREQ_CHANGE_TCOLOR)
 
     def page_left(self):
-        self._funcs.play_sound(r'ti')
+        self._funcs.play_sound('ti')
         self._mode_index = (self._mode_index + len(MODES) - 1) % len(MODES)
         self.ids.label_screenmanager.switch_screen(
             MODES[self._mode_index],
-            transition=SlideTransition(direction=r'right')
+            transition=SlideTransition(direction='right')
         )
         self.ids.record_list_screenmanager.switch_screen(
             MODES[self._mode_index],
-            transition=SlideTransition(direction=r'right')
+            transition=SlideTransition(direction='right')
         )
 
     def page_right(self):
-        self._funcs.play_sound(r'ti')
+        self._funcs.play_sound('ti')
         self._mode_index = (self._mode_index + 1) % len(MODES)
         self.ids.label_screenmanager.switch_screen(
             MODES[self._mode_index],
-            transition=SlideTransition(direction=r'left')
+            transition=SlideTransition(direction='left')
         )
         self.ids.record_list_screenmanager.switch_screen(
             MODES[self._mode_index],
-            transition=SlideTransition(direction=r'left')
+            transition=SlideTransition(direction='left')
         )
 
     def goto_menu(self):
         self.manager.goto_menu()
 
     def open_detail(self, *, mode, record):
-        self._funcs.play_sound(r'bween')
-        detail = self.manager.get_screen(r'detail')
+        self._funcs.play_sound('bween')
+        detail = self.manager.get_screen('detail')
         detail.update(mode=mode, record=record)
-        self.manager.switch_screen(r'detail', FadeTransition(duration=0.2))
+        self.manager.switch_screen('detail', FadeTransition(duration=0.2))
 
     def clear_records_after_confirmation(self):
         popup = customwidgets.YesNoPopup(
@@ -240,7 +240,7 @@ class DetailScreen(Screen):
 
     def update(self, *, mode, record):
         self._mode = mode
-        if mode == r'timeattack':
+        if mode == 'timeattack':
             text = r"""{r[date]}
   Points    ... {points}
   Answered  ... {r[num_answered]}
@@ -250,22 +250,22 @@ class DetailScreen(Screen):
   Languages ... {languages}""".format(
                 r=record,
                 points='{:.2f}'.format(record['points']),
-                ratio=(record[r'num_cleared'] / record[r'num_answered'] * 100),
-                formated_time=_format_time(record[r'time']),
-                languages=r', '.join(record[r'languages']))
-        elif mode == r'endless':
+                ratio=(record['num_cleared'] / record['num_answered'] * 100),
+                formated_time=_format_time(record['time']),
+                languages=', '.join(record['languages']))
+        elif mode == 'endless':
             text = r"""{r[date]}
   Correct   ... {r[num_cleared]}
   Answered  ... {r[num_answered]}
   Ratio     ... {r[num_cleared]}/{r[num_answered]}({ratio:.1f}%)
   Languages ... {languages}""".format(
                 r=record,
-                ratio=((record[r'num_cleared'] / record[r'num_answered'] * 100) if record[r'num_answered'] != 0 else 0),
-                languages=r', '.join(record[r'languages']))
+                ratio=((record['num_cleared'] / record['num_answered'] * 100) if record['num_answered'] != 0 else 0),
+                languages=', '.join(record['languages']))
         self.ids.main.text = text
 
     def on_touch_down(self, touch):
-        self.manager.switch_screen(r'main')
+        self.manager.switch_screen('main')
         return True
 
 
@@ -276,31 +276,31 @@ class Manager(CustomScreenManager):
         self._funcs = appstate.funcs
         self._data = appstate.data
         self._mode_index = 0
-        self.add_widget(Screen(name=r'blank'))
-        self.add_widget(MainScreen(name=r'main', appstate=appstate))
-        self.add_widget(DetailScreen(name=r'detail'))
+        self.add_widget(Screen(name='blank'))
+        self.add_widget(MainScreen(name='main', appstate=appstate))
+        self.add_widget(DetailScreen(name='detail'))
 
     def on_pre_enter(self):
-        self.get_screen(r'main').update()
-        self.switch_screen(r'blank')
+        self.get_screen('main').update()
+        self.switch_screen('blank')
 
     def on_enter(self):
-        self.switch_screen(r'main')
+        self.switch_screen('main')
 
     def goto_menu(self):
         funcs = self._funcs
-        funcs.play_sound(r'bween')
-        funcs.switch_screen(r'menu', FadeTransition())
+        funcs.play_sound('bween')
+        funcs.switch_screen('menu', FadeTransition())
 
 
 def instantiate(**kwargs):
     Builder.load_string(KV_CODE, filename=__name__)
     manager = Manager(**kwargs)
     Builder.unload_file(__name__)
-    screen = Screen(name=r'records')
+    screen = Screen(name='records')
     screen.add_widget(manager)
     # screenが幾つかのMethod呼び出しをmanagerに任せるよう設定
-    for name in r'on_pre_enter on_enter on_pre_leave on_leave'.split():
+    for name in 'on_pre_enter on_enter on_pre_leave on_leave'.split():
         def proxy(_name=name):
             func = getattr(manager, _name, None)
             if func is not None:

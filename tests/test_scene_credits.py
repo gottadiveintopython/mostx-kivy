@@ -12,7 +12,7 @@ from applicationsettings import LanguageSettings
 def _test():
     appstate = applicationstate.create_default()
     appstate.data.lang_settings = LanguageSettings(
-        filepath=r'./test_language_settings.json'
+        filepath='./test_language_settings.json'
     )
     root = ScreenManager()
     root.add_widget(
@@ -21,5 +21,5 @@ def _test():
     runTouchApp(root)
 
 
-if __name__ == r'__main__':
+if __name__ == '__main__':
     _test()
