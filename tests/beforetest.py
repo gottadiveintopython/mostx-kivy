@@ -1,15 +1,22 @@
-import os.path
 import sys
+import os
+from os.path import (
+    abspath as ospath_abspath,
+    dirname as ospath_dirname,
+    pardir as ospath_pardir,
+    join as ospath_join,
+)
 
-import kivy.resources
+from kivy.resources import resource_add_path
 
-sys.path.insert(
-    0,
-    os.path.join(os.path.pardir, 'mostx')
-)
-kivy.resources.resource_add_path(
-    os.path.join(os.path.pardir, 'mostx', 'data', 'image')
-)
-kivy.resources.resource_add_path(
-    os.path.join(os.path.pardir, 'mostx', 'data', 'text')
-)
+
+ROOT_DIRECTORY = ospath_abspath(ospath_join(
+    ospath_dirname(sys.modules[__name__].__file__),
+    ospath_pardir,
+    'mostx',
+))
+sys.path.append(ROOT_DIRECTORY)
+
+
+for parent, __1, __2 in os.walk(ospath_join(ROOT_DIRECTORY, 'data')):
+    resource_add_path(parent)
