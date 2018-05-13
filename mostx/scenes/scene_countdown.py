@@ -58,9 +58,9 @@ class CountdownScreen(Screen):
 
     seconds = NumericProperty()
 
-    def __init__(self, appstate, **kwargs):
+    def __init__(self, appglobals, **kwargs):
         super(CountdownScreen, self).__init__(**kwargs)
-        self._appstate = appstate
+        self._appglobals = appglobals
         self._bind_id = None
 
     def on_pre_enter(self):
@@ -84,14 +84,14 @@ class CountdownScreen(Screen):
         self.seconds -= dt
         if self.seconds <= 0:
             self.seconds = 0
-            self._appstate.funcs.switch_screen(
-                'quiz_' + self._appstate.data.mode,
+            self._appglobals.funcs.switch_screen(
+                'quiz_' + self._appglobals.data.mode,
                 NoTransition()
             )
             return False
 
     def on_child_text(self, widget, value):
-        self._appstate.funcs.play_sound('count')
+        self._appglobals.funcs.play_sound('count')
 
 
 def instantiate(**kwargs):

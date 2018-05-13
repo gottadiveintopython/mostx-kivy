@@ -33,9 +33,9 @@ customwidgets.do_nothing()
 
 class TitleScreen(Screen):
 
-    def __init__(self, *, appstate, **kwargs):
+    def __init__(self, *, appglobals, **kwargs):
         super(TitleScreen, self).__init__(**kwargs)
-        self._appstate = appstate
+        self._appglobals = appglobals
         self._anim_layer = BouncingSprites(
             atlasfilepath=kivy.resources.resource_find('characters.atlas'),
             size=(1000, 1000),
@@ -44,7 +44,7 @@ class TitleScreen(Screen):
         self.add_widget(self._anim_layer)
 
     def on_pre_enter(self):
-        self._appstate.funcs.play_sound('intro')
+        self._appglobals.funcs.play_sound('intro')
 
     def on_enter(self):
         self._anim_layer.start_animation()
@@ -53,15 +53,15 @@ class TitleScreen(Screen):
         self._anim_layer.stop_animation()
 
     def go_menu(self):
-        self._appstate.funcs.play_sound('bween')
-        self._appstate.funcs.switch_screen(
+        self._appglobals.funcs.play_sound('bween')
+        self._appglobals.funcs.switch_screen(
             'menu',
             transition=FadeTransition(duration=.8)
         )
 
     def switch_devmode(self, button):
-        data = self._appstate.data
-        self._appstate.funcs.play_sound('bween')
+        data = self._appglobals.data
+        self._appglobals.funcs.play_sound('bween')
         if data.devmode:
             data.devmode = False
             button.text = ''

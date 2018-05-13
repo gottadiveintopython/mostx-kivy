@@ -6,13 +6,13 @@ from kivy.uix.screenmanager import ScreenManager
 import beforetest
 import scenes.scene_result
 from attrdict import attrdict
-import applicationstate
+import applicationglobals
 from applicationsettings import Records
 
 
 def _test():
-    appstate = applicationstate.create_default()
-    appstate.data.update(
+    appglobals = applicationglobals.create_default()
+    appglobals.data.update(
         records=Records(filepath='./test_records.json'),
         devmode=False,
         mode='timeattack',
@@ -26,7 +26,7 @@ def _test():
     )
     root = ScreenManager()
     root.add_widget(
-        scenes.scene_result.instantiate(appstate=appstate)
+        scenes.scene_result.instantiate(appglobals=appglobals)
     )
     runTouchApp(root)
 

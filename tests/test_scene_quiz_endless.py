@@ -4,14 +4,14 @@ from kivy.base import runTouchApp
 from kivy.uix.screenmanager import ScreenManager
 
 import beforetest
-import applicationstate
+import applicationglobals
 import scenes.scene_quiz_endless
 from applicationsettings import LanguageSettings, QuizSettings
 
 
 def _test():
-    appstate = applicationstate.create_default()
-    appstate.data.update(
+    appglobals = applicationglobals.create_default()
+    appglobals.data.update(
         lang_settings=LanguageSettings(
             filepath='./test_language_settings.json'
         ),
@@ -23,7 +23,7 @@ def _test():
     )
     root = ScreenManager()
     root.add_widget(
-        scenes.scene_quiz_endless.instantiate(appstate=appstate)
+        scenes.scene_quiz_endless.instantiate(appglobals=appglobals)
     )
     runTouchApp(root)
 

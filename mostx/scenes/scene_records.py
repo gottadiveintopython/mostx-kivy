@@ -109,10 +109,10 @@ class CustomScreenManager(ScreenManager):
 
 class RecordList(Screen):
 
-    def __init__(self, *, appstate, **kwargs):
+    def __init__(self, *, appglobals, **kwargs):
         super(RecordList, self).__init__(**kwargs)
-        self._funcs = appstate.funcs
-        self._data = appstate.data
+        self._funcs = appglobals.funcs
+        self._data = appglobals.data
         layout = self.ids.layout
         self._buttons = buttons = []
         for i in range(Records.MAX_RECORDS):
@@ -157,15 +157,15 @@ class MainScreen(Screen):
     TCOLOR2 = [.2, .8, .2, 1]
     FREQ_CHANGE_TCOLOR = .6
 
-    def __init__(self, *, appstate, **kwargs):
+    def __init__(self, *, appglobals, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
-        self._funcs = appstate.funcs
-        self._data = appstate.data
+        self._funcs = appglobals.funcs
+        self._data = appglobals.data
         self._mode_index = 0
         record_list_screenmanager = self.ids.record_list_screenmanager
         label_screenmanager = self.ids.label_screenmanager
         for mode in MODES:
-            record_list = RecordList(name=mode, appstate=appstate)
+            record_list = RecordList(name=mode, appglobals=appglobals)
             record_list_screenmanager.add_widget(record_list)
             screen = Screen(name=mode)
             screen.add_widget(customwidgets.AutoLabel(text=mode))
@@ -271,13 +271,13 @@ class DetailScreen(Screen):
 
 class Manager(CustomScreenManager):
 
-    def __init__(self, *, appstate, **kwargs):
+    def __init__(self, *, appglobals, **kwargs):
         super(Manager, self).__init__(**kwargs)
-        self._funcs = appstate.funcs
-        self._data = appstate.data
+        self._funcs = appglobals.funcs
+        self._data = appglobals.data
         self._mode_index = 0
         self.add_widget(Screen(name='blank'))
-        self.add_widget(MainScreen(name='main', appstate=appstate))
+        self.add_widget(MainScreen(name='main', appglobals=appglobals))
         self.add_widget(DetailScreen(name='detail'))
 
     def on_pre_enter(self):

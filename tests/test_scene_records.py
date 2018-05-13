@@ -7,14 +7,14 @@ from kivy.base import runTouchApp
 from kivy.uix.screenmanager import ScreenManager
 
 import beforetest
-import applicationstate
+import applicationglobals
 import scenes.scene_records
 from applicationsettings import Records
 
 
 def _test():
-    appstate = applicationstate.create_default()
-    appstate.data.records = records = Records(
+    appglobals = applicationglobals.create_default()
+    appglobals.data.records = records = Records(
         filepath='./test_records.json'
     )
     today = datetime.date.today().isoformat()
@@ -44,10 +44,10 @@ def _test():
         )
     root = ScreenManager()
     root.add_widget(
-        scenes.scene_records.instantiate(appstate=appstate)
+        scenes.scene_records.instantiate(appglobals=appglobals)
     )
     runTouchApp(root)
-    appstate.data.records.save()
+    appglobals.data.records.save()
 
 
 if __name__ == '__main__':

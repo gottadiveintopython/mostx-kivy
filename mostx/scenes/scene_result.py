@@ -42,10 +42,10 @@ def _format_time(time):
 
 class ResultScreen(Screen):
 
-    def __init__(self, *, appstate, **kwargs):
+    def __init__(self, *, appglobals, **kwargs):
         super(ResultScreen, self).__init__(**kwargs)
-        self._funcs = appstate.funcs
-        self._data = appstate.data
+        self._funcs = appglobals.funcs
+        self._data = appglobals.data
         self._color_flag = False
 
     def on_touch_down(self, touch):

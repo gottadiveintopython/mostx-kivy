@@ -24,10 +24,10 @@ customwidgets.do_nothing()
 
 class CreditsScreen(Screen):
 
-    def __init__(self, *, appstate, **kwargs):
+    def __init__(self, *, appglobals, **kwargs):
         super(CreditsScreen, self).__init__(**kwargs)
-        self._funcs = appstate.funcs
-        self._data = appstate.data
+        self._funcs = appglobals.funcs
+        self._data = appglobals.data
 
     def on_touch_down(self, touch):
         self._funcs.switch_screen('menu', FadeTransition())

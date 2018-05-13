@@ -12,7 +12,7 @@ from kivy.uix.screenmanager import (
 )
 
 import applicationsettings
-import applicationstate
+import applicationglobals
 
 kivy.require('1.9.1')
 
@@ -21,12 +21,12 @@ class MostxApp(App):
 
     def build(self):
         self.root = root = ScreenManager()
-        self._appstate = appstate = applicationstate.create_default()
-        appstate.funcs.update(
+        self._appglobals = appglobals = applicationglobals.create_default()
+        appglobals.funcs.update(
             switch_screen=_create_function_switch_screen(root),
             play_sound=_create_function_play_sound(),
         )
-        appstate.data.update(
+        appglobals.data.update(
             records=applicationsettings.Records(
                 filepath=os.path.join(self.user_data_dir, 'records.json')
             ),
@@ -39,16 +39,16 @@ class MostxApp(App):
             devmode=False,
         )
         root.add_widget(Screen(name='blank'))
-        _setup_all_scenes(root, appstate)
+        _setup_all_scenes(root, appglobals)
         return root
 
     def on_start(self):
-        self._appstate.funcs.switch_screen('title')
+        self._appglobals.funcs.switch_screen('title')
 
     def on_stop(self):
-        self._appstate.data.records.save()
-        self._appstate.data.lang_settings.save()
-        self._appstate.data.quiz_settings.save()
+        self._appglobals.data.records.save()
+        self._appglobals.data.lang_settings.save()
+        self._appglobals.data.quiz_settings.save()
 
     def on_pause(self):
         return True
@@ -90,14 +90,14 @@ def _create_function_play_sound():
     return play_sound
 
 
-def _setup_all_scenes(screenmanager, appstate):
+def _setup_all_scenes(screenmanager, appglobals):
     scene_names = [
         'title', 'menu', 'countdown', 'language_settings', 'records',
         'quiz_endless', 'quiz_timeattack', 'result', 'credits',
     ]
     for name in scene_names:
         module = importlib.import_module('scenes.scene_' + name)
-        screenmanager.add_widget(module.instantiate(appstate=appstate))
+        screenmanager.add_widget(module.instantiate(appglobals=appglobals))
 
 
 def _main():

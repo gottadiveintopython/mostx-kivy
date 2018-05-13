@@ -89,10 +89,10 @@ class LanguageSettingsRow(BoxLayout):
 
 class LanguageSettingsScreen(Screen):
 
-    def __init__(self, *, appstate, **kwargs):
+    def __init__(self, *, appglobals, **kwargs):
         super(LanguageSettingsScreen, self).__init__(**kwargs)
-        self._funcs = appstate.funcs
-        self._data = appstate.data
+        self._funcs = appglobals.funcs
+        self._data = appglobals.data
         layout = self.ids.id_layout
         for language, params in self._data.lang_settings.data.items():
             row = LanguageSettingsRow(language=language)

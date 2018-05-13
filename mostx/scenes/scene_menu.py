@@ -44,10 +44,10 @@ customwidgets.do_nothing()
 
 class MenuScreen(Screen):
 
-    def __init__(self, *, appstate, **kwargs):
+    def __init__(self, *, appglobals, **kwargs):
         super(MenuScreen, self).__init__(**kwargs)
-        self._funcs = appstate.funcs
-        self._data = appstate.data
+        self._funcs = appglobals.funcs
+        self._data = appglobals.data
 
     def goto_quiz(self, mode):
         self._data.mode = mode

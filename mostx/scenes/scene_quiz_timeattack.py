@@ -124,7 +124,7 @@ class QuizButtonLayout(BoxLayout):
 
 class LevelupScreen(Screen):
 
-    def __init__(self, *, quizstate, appstate, **kwargs):
+    def __init__(self, *, quizstate, appglobals, **kwargs):
         super(LevelupScreen, self).__init__(**kwargs)
         self._quizstate = quizstate
         self._animation_fadeout = Animation(
@@ -163,7 +163,7 @@ class QuizScreen(Screen):
     time = NumericProperty()
     font_name = StringProperty('Roboto')
 
-    def __init__(self, *, quizstate, appstate, **kwargs):
+    def __init__(self, *, quizstate, appglobals, **kwargs):
         super(QuizScreen, self).__init__(**kwargs)
         self._quizstate = quizstate
         self._all_buttons = []
@@ -241,10 +241,10 @@ class CorrectOrNotScreen(Screen):
     time = NumericProperty()
     is_correct = BooleanProperty()
 
-    def __init__(self, *, quizstate, appstate, **kwargs):
+    def __init__(self, *, quizstate, appglobals, **kwargs):
         super(CorrectOrNotScreen, self).__init__(**kwargs)
         self._quizstate = quizstate
-        self._funcs = appstate.funcs
+        self._funcs = appglobals.funcs
 
     def on_pre_enter(self):
         quizstate = self._quizstate
@@ -270,9 +270,9 @@ class LookbackScreen(Screen):
     is_correct = BooleanProperty()
     font_name = StringProperty('Roboto')
 
-    def __init__(self, *, quizstate, appstate, **kwargs):
+    def __init__(self, *, quizstate, appglobals, **kwargs):
         super(LookbackScreen, self).__init__(**kwargs)
-        self._funcs = appstate.funcs
+        self._funcs = appglobals.funcs
         self._quizstate = quizstate
 
     def on_touch_down(self, touch):
@@ -294,11 +294,11 @@ class LookbackScreen(Screen):
 
 class Manager(ScreenManager):
 
-    def __init__(self, *, appstate, **kwargs):
+    def __init__(self, *, appglobals, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self._random = random.Random()
-        self._funcs = appstate.funcs
-        self._data = appstate.data
+        self._funcs = appglobals.funcs
+        self._data = appglobals.data
         self._quizstate = attrdict(
             lang_font_tuples=None,             # list of (language, font_name,)
             level=None,                        # difficulty level
@@ -323,7 +323,7 @@ class Manager(ScreenManager):
         }.items():
             self.add_widget(klass(
                 name=name,
-                appstate=appstate,
+                appglobals=appglobals,
                 quizstate=quizstate))
 
     def switch_screen(self, name, transition=NoTransition()):
@@ -435,13 +435,13 @@ def instantiate(**kwargs):
 def _test():
     import kivy.resources
     from kivy.base import runTouchApp
-    import appstate
+    import appglobals
     from language_settings import LanguageSettings
     from quiz_settings import QuizSettings
 
     kivy.resources.resource_add_path('./data/image')
-    appstate = appstate.create_default()
-    appstate.data.update(
+    appglobals = appglobals.create_default()
+    appglobals.data.update(
         lang_settings=LanguageSettings(filepath='./test_language_settings.json'),
         quiz_settings=QuizSettings(filepath='./test_quiz_settings.json'),
         devmode=False,
@@ -449,7 +449,7 @@ def _test():
     )
     root = ScreenManager()
     root.add_widget(
-        instantiate(appstate=appstate)
+        instantiate(appglobals=appglobals)
     )
     runTouchApp(root)
 
