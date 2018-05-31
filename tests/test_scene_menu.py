@@ -4,15 +4,15 @@ from kivy.base import runTouchApp
 from kivy.uix.screenmanager import ScreenManager
 
 import beforetest
-import applicationglobals
-import scenes.scene_menu
+from appglobals import AppGlobals
+import scenes.menu
 
 
 def _test():
     root = ScreenManager()
     root.add_widget(
-        scenes.scene_menu.instantiate(
-            appglobals=applicationglobals.create_default()
+        scenes.menu.instantiate(
+            appglobals=AppGlobals()
         )
     )
     runTouchApp(root)

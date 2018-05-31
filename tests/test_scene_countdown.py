@@ -4,19 +4,19 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 import beforetest
-import applicationglobals
-import scenes.scene_countdown
+from appglobals import AppGlobals
+import scenes.countdown
 
 
 class TestApp(App):
 
     def build(self):
-        appglobals = applicationglobals.create_default()
+        appglobals = AppGlobals()
         appglobals.data.mode = 'endless'
         self.root = root = ScreenManager()
         root.add_widget(Screen())
         root.add_widget(
-            scenes.scene_countdown.instantiate(appglobals=appglobals)
+            scenes.countdown.instantiate(appglobals=appglobals)
         )
         return root
 

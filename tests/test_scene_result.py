@@ -4,29 +4,31 @@ from kivy.base import runTouchApp
 from kivy.uix.screenmanager import ScreenManager
 
 import beforetest
-import scenes.scene_result
+import scenes.result
 from attrdict import attrdict
-import applicationglobals
-from applicationsettings import Records
+from appglobals import AppGlobals
+from records import Records
 
 
 def _test():
-    appglobals = applicationglobals.create_default()
-    appglobals.data.update(
+    appglobals = AppGlobals()
+    appglobals.update(
         records=Records(filepath='./test_records.json'),
+    )
+    appglobals.data.update(
         devmode=False,
         mode='timeattack',
         result=attrdict(
             points=12.34,
-            num_cleared=20,
-            num_answered=37,
+            n_cleared=20,
+            n_answered=37,
             time=123,
-            languages=['python'],
-        )
+            langs=['python'],
+        ),
     )
     root = ScreenManager()
     root.add_widget(
-        scenes.scene_result.instantiate(appglobals=appglobals)
+        scenes.result.instantiate(appglobals=appglobals)
     )
     runTouchApp(root)
 

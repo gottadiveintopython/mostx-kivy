@@ -2,8 +2,10 @@ __pycache__/
 bin/
 *.pyc
 *.pyo
-*.json
+/tests/test_langsettings.json
+/tests/test_quizsettings.json
 *.sublime-workspace
 
 .buildozer/
 buildozer/
+.venv/

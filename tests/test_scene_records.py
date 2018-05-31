@@ -7,47 +7,57 @@ from kivy.base import runTouchApp
 from kivy.uix.screenmanager import ScreenManager
 
 import beforetest
-import applicationglobals
-import scenes.scene_records
-from applicationsettings import Records
+from appglobals import AppGlobals
+from records import Records
+import scenes.records
 
 
 def _test():
-    appglobals = applicationglobals.create_default()
-    appglobals.data.records = records = Records(
+    # 無作為にQuizの成績を作る
+    random_random = random.random
+    random_randrange = random.randrange
+    random_sample = random.sample
+    LANGS = 'Japanese Chinese Korean English'.split()
+    LEN_LANGS_PLUS1 = len(LANGS) + 1
+    records = Records(
         filepath='./test_records.json'
     )
     today = datetime.date.today().isoformat()
-    for i in range(3):
-        num_cleared = random.randrange(1, 10)
+    for i in range(50):
+        n_answered = random_randrange(10, 20)
         records.add(
             mode='endless',
             result={
                 'date': today,
-                'num_cleared': num_cleared,
-                'num_answered': 10,
-                'languages': 'japanese chinese'.split(),
+                'n_cleared': random_randrange(0, n_answered),
+                'n_answered': n_answered,
+                'langs': random_sample(LANGS, random_randrange(1, LEN_LANGS_PLUS1)),
             }
         )
-    for i in range(3):
-        time = random.randrange(1, 40)
+    for i in range(50):
+        time = random_random() * 300
+        n_answered = random_randrange(10, 20)
+        n_cleared = random_randrange(0, n_answered)
         records.add(
             mode='timeattack',
             result={
                 'date': today,
-                'points': round(time * 20 / 25, 2),
-                'num_cleared': 20,
-                'num_answered': 25,
+                'points': round(time * n_cleared / n_answered, 2),
+                'n_cleared': n_cleared,
+                'n_answered': n_answered,
                 'time': time,
-                'languages': 'japanese korean'.split(),
+                'langs': random_sample(LANGS, random_randrange(1, LEN_LANGS_PLUS1)),
             }
         )
+    #
+    appglobals = AppGlobals()
+    appglobals.records = records
     root = ScreenManager()
     root.add_widget(
-        scenes.scene_records.instantiate(appglobals=appglobals)
+        scenes.records.instantiate(appglobals=appglobals)
     )
     runTouchApp(root)
-    appglobals.data.records.save()
+    # appglobals.records.save()
 
 
 if __name__ == '__main__':
