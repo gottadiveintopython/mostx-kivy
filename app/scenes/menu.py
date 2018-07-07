@@ -3,13 +3,15 @@
 __all__ = ('instantiate', )
 
 from kivy.lang import Builder
-from kivy.uix.screenmanager import Screen, FadeTransition
+from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
 
 import customwidgets
 
 
 Builder.load_string(r'''
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
 <MostxMenuItem@BorderedButton>:
 
 <MostxMenuScreen>:
@@ -20,59 +22,53 @@ Builder.load_string(r'''
         spacing: 40
         MostxMenuItem:
             text: 'Play Endless Mode'
-            on_release: root.goto_quiz('endless')
+            on_release:
+                root.appglobals.data.mode = 'endless'
+                funcs = root.appglobals.funcs
+                funcs.play_sound('bween')
+                funcs.switch_scene('countdown', FadeTransition(duration=1))
         MostxMenuItem:
             text: 'Play TimeAttack Mode'
-            on_release: root.goto_quiz('timeattack')
+            on_release:
+                root.appglobals.data.mode = 'timeattack'
+                funcs = root.appglobals.funcs
+                funcs.play_sound('bween')
+                funcs.switch_scene('countdown', FadeTransition(duration=1))
             disabled: True
         MostxMenuItem:
             text: 'View Records'
-            on_release: root.goto_records()
+            on_release:
+                funcs = root.appglobals.funcs
+                funcs.play_sound('bween')
+                funcs.switch_scene(
+                'records',
+                transition=FadeTransition(duration=.4)
+                )
         MostxMenuItem:
             text: 'Language Settings'
-            on_release: root.goto_langsettings()
+            on_release:
+                funcs = root.appglobals.funcs
+                funcs.play_sound('bween')
+                funcs.switch_scene('langsettings', FadeTransition())
         MostxMenuItem:
             text: 'Credits'
-            on_release: root.goto_credits()
+            on_release:
+                funcs = root.appglobals.funcs
+                funcs.play_sound('bween')
+                funcs.switch_scene('credits', FadeTransition())
         MostxMenuItem:
             text: 'Back to title'
-            on_release: root.goto_title()
+            on_release:
+                root.appglobals.funcs.switch_scene(
+                'title',
+                transition=FadeTransition(duration=.6),
+                )
 ''')
 
 
 class MostxMenuScreen(Screen):
 
     appglobals = ObjectProperty()
-
-    def goto_quiz(self, mode):
-        self.appglobals.data.mode = mode
-        funcs = self.appglobals.funcs
-        funcs.play_sound('bween')
-        funcs.switch_scene('countdown', FadeTransition(duration=1))
-
-    def goto_records(self):
-        funcs = self.appglobals.funcs
-        funcs.play_sound('bween')
-        funcs.switch_scene(
-            'records',
-            transition=FadeTransition(duration=.4)
-        )
-
-    def goto_title(self):
-        self.appglobals.funcs.switch_scene(
-            'title',
-            transition=FadeTransition(duration=.6)
-        )
-
-    def goto_credits(self):
-        funcs = self.appglobals.funcs
-        funcs.play_sound('bween')
-        funcs.switch_scene('credits', FadeTransition())
-
-    def goto_langsettings(self):
-        funcs = self.appglobals.funcs
-        funcs.play_sound('bween')
-        funcs.switch_scene('langsettings', FadeTransition())
 
 
 def instantiate(**kwargs):
