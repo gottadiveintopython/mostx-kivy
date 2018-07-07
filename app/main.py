@@ -4,6 +4,7 @@ import importlib
 import sys
 from pathlib import PurePath, Path
 from kivy.resources import resource_add_path
+from kivy.properties import ObjectProperty
 from kivy.core.audio import SoundLoader
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
@@ -20,9 +21,32 @@ from customscreenmanager import MostxScreenManager
 
 class MostxApp(App):
 
+    appglobals = ObjectProperty(AppGlobals())
+
+    def build_config(self, config):
+        config.setdefaults('game', {'devmode': False, })
+
+    def build_settings(self, settings):
+        JSON_DATA = """[
+            { "type": "title",
+              "title": "Game Config" },
+
+            { "type": "bool",
+              "title": "Dev Mode",
+              "section": "game",
+              "key": "devmode" }
+        ]"""
+        settings.add_json_panel('Mostx', self.config, data=JSON_DATA)
+
+    def on_config_change(self, config, section, key, value):
+        if config is not self.config:
+            return
+        if (section, key, ) == ('game', 'devmode', ):
+            self.appglobals.data.devmode = config.get('game', 'devmode') != '0'
+
     def build(self):
         self.root = root = MostxScreenManager()
-        self.appglobals = appglobals = AppGlobals()
+        appglobals = self.appglobals
         appglobals.funcs.update(
             switch_scene=root.switch_screen,
             play_sound=_create_function_play_sound(),
@@ -33,7 +57,7 @@ class MostxApp(App):
             langsettings=LangSettings(user_data_dir / 'langsettings.json'),
             quizsettings=QuizSettings(user_data_dir / 'quizsettings.json'),
         )
-        appglobals.data.devmode = False
+        appglobals.data.devmode = self.config.get('game', 'devmode') != '0'
         root.add_widget(Screen(name='blank'))
         self._setup_all_scenes()
         return root

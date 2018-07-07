@@ -24,11 +24,6 @@ KV_CODE = r"""
         size_hint: 0.4, 0.15
         pos_hint: {'center_x':0.5, 'y':0.1}
         on_release: root.go_menu()
-    BorderlessButton:
-        size_hint: 0.1, 0.1
-        pos_hint: {'x':0, 'y':0.9}
-        color: [6, 6, 0, 1]
-        on_release: root.switch_devmode(args[0])
 """
 
 
@@ -61,16 +56,6 @@ class MostxTitleScreen(Screen):
             'menu',
             transition=FadeTransition(duration=.8)
         )
-
-    def switch_devmode(self, button):
-        data = self.appglobals.data
-        self.appglobals.funcs.play_sound('bween')
-        if data.devmode:
-            data.devmode = False
-            button.text = ''
-        else:
-            data.devmode = True
-            button.text = 'dev'
 
 
 def instantiate(**kwargs):
