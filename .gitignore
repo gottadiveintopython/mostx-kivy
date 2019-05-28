@@ -4,8 +4,8 @@ bin/
 *.pyo
 /tests/test_langsettings.json
 /tests/test_quizsettings.json
-*.sublime-workspace
 
-.buildozer/
-buildozer/
-.venv/
+/.buildozer/
+/.venv/
+/.vscode/
+/app/mostx.ini
