@@ -18,10 +18,10 @@ class MostxScreenManager(ScreenManager):
         にその事を書き残すだけである。これはその方が各Screenを単体testする時に都合が良いからです。
         '''
         if self.transition.is_active:
-            Logger.warning(f"YourApp: You can't switch screen until the previous transition is done.")
+            Logger.warning(f"MostxApp: You can't switch screen until the previous transition is done.")
             return False
         if not self.has_screen(name):
-            Logger.warning(f"YourApp: No screen named '{name}'")
+            Logger.warning(f"MostxApp: No screen named '{name}'")
             return False
         if transition is not None:
             self.transition = transition
