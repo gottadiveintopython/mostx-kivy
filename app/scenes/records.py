@@ -188,7 +188,7 @@ class MostxRecordsRoot(Factory.Screen):
         data = self.appglobals.records.data
         inner_manager.get_screen('timeattack').ids.recycleview.data = data['timeattack']
         inner_manager.get_screen('endless').ids.recycleview.data = data['endless']
-        inner_manager.switch_screen(next(self._screennames))
+        inner_manager.try_to_switch_screen(next(self._screennames))
 
     def on_enter(self):
         Clock.schedule_interval(self._update_index_of_triangle_color, 0.6)
@@ -196,7 +196,7 @@ class MostxRecordsRoot(Factory.Screen):
     def on_leave(self):
         Clock.unschedule(self._update_index_of_triangle_color)
         inner_manager = self.ids.inner_manager
-        inner_manager.switch_screen('blank')
+        inner_manager.try_to_switch_screen('blank')
 
     def _update_index_of_triangle_color(self, __):
         self._index_of_triangle_color = \
@@ -226,7 +226,7 @@ class MostxRecordsRoot(Factory.Screen):
 
     def on_press_triangle(self, direction):
         self.appglobals.funcs.play_sound('ti')
-        self.ids.inner_manager.switch_screen(
+        self.ids.inner_manager.try_to_switch_screen(
             next(self._screennames),
             transition=SlideTransition(direction=direction)
         )

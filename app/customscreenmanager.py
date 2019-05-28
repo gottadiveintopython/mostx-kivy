@@ -1,31 +1,29 @@
 # -*- coding: utf-8 -*-
 
 __all__ = ('MostxScreenManager', )
-from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
+
+
+from kivy.logger import Logger
+from kivy.uix.screenmanager import ScreenManager
 
 
 class MostxScreenManager(ScreenManager):
-    '''
-    Screenの切り替えを代入文(current属性への代入)で行うのに違和感があるので、Method
-    呼び出しにて行うようにした。
-    '''
-
-    def switch_screen(self, name, transition=NoTransition()):
-        self.transition = transition
+    def try_to_switch_screen(self, name, transition=None):
+        '''Screenを切り替えるmethod
+        戻り値:
+            True  切り替え成功
+            False 切り替え失敗
+        以前の切り替えが終わってない時に別のtransitionを使って次の切り替えを行おうとすると表示がおかしくなるので、
+        そうならないように確認している。また切り替えようとしたScreenが存在しない時には、例外を投げるのではなくlog
+        にその事を書き残すだけである。これはその方が各Screenを単体testする時に都合が良いからです。
+        '''
+        if self.transition.is_active:
+            Logger.warning(f"YourApp: You can't switch screen until the previous transition is done.")
+            return False
+        if not self.has_screen(name):
+            Logger.warning(f"YourApp: No screen named '{name}'")
+            return False
+        if transition is not None:
+            self.transition = transition
         self.current = name
-
-
-# class MostxScreenForNesting(Screen):
-#     '''ScreenManagerを入れ子にする際に間に挟むScreen
-
-#     on_pre_enter(), on_enter(), on_pre_leave(), on_leave()の四つのMethodの呼び出
-#     しの伝搬を行う'''
-#     pass
-
-
-# for name in 'on_pre_enter on_enter on_pre_leave on_leave'.split():
-#     def proxy(self, _name=name, *args, **kwargs):
-#         method = getattr(self.children[0], _name, None)
-#         if method is not None:
-#             return method(*args, **kwargs)
-#     setattr(MostxScreenForNesting, name, proxy)
+        return True

@@ -158,7 +158,7 @@ class LevelupScreen(Screen):
         self._animation_fadeout.start(self.ids.level)
 
     def on_touch_down(self, touch):
-        self.manager.switch_screen('quiz')
+        self.manager.try_to_switch_screen('quiz')
         return True
 
 
@@ -290,7 +290,7 @@ class CorrectOrNotScreen(Screen):
 
     def on_button_lookback(self):
         self._funcs.play_sound('ti')
-        self.manager.switch_screen(
+        self.manager.try_to_switch_screen(
             'lookback',
             transition=SlideTransition(direction='right'))
 
@@ -312,7 +312,7 @@ class LookbackScreen(Screen):
 
     def on_touch_down(self, touch):
         self._funcs.play_sound('ti')
-        self.manager.switch_screen(
+        self.manager.try_to_switch_screen(
             'correct_or_not',
             transition=SlideTransition(direction='left'))
         return True
@@ -362,7 +362,7 @@ class Manager(ScreenManager):
                 appglobals=appglobals,
                 quizstate=quizstate))
 
-    def switch_screen(self, name, transition=NoTransition()):
+    def try_to_switch_screen(self, name, transition=NoTransition()):
         self.transition = transition
         self.current = name
 
@@ -383,7 +383,7 @@ class Manager(ScreenManager):
             n_answered=quizstate.n_answered,
             langs=[lang for lang, font_name in quizstate.lang_font_tuples]
         )
-        self._funcs.switch_screen('result', FadeTransition(duration=1))
+        self._funcs.try_to_switch_screen('result', FadeTransition(duration=1))
 
     def on_pre_enter(self):
         quizstate = self._quizstate
@@ -406,10 +406,10 @@ class Manager(ScreenManager):
         )
         quizstate.update(**self._quiz_settings['levels'][0])
         self.update_quiz()
-        self.switch_screen('blank')
+        self.try_to_switch_screen('blank')
 
     def on_enter(self):
-        self.switch_screen('quiz')
+        self.try_to_switch_screen('quiz')
 
     def on_timeout(self):
         self.goto_result()
@@ -426,7 +426,7 @@ class Manager(ScreenManager):
             quizstate.time += time_increament
         else:
             quizstate.time = max(0, quizstate.time - time_increament)
-        self.switch_screen('correct_or_not')
+        self.try_to_switch_screen('correct_or_not')
         self._funcs.play_sound('correct' if quizstate.is_correct else 'incorrect')
 
     def next_quiz(self):
@@ -435,13 +435,13 @@ class Manager(ScreenManager):
             quizstate.level += 1
             quizstate.update(**self._quiz_settings['levels'][quizstate.level])
             self.update_quiz()
-            self.switch_screen('levelup', FadeTransition())
+            self.try_to_switch_screen('levelup', FadeTransition())
         else:
             if quizstate.time == 0:
                 self.goto_result()
             else:
                 self.update_quiz()
-                self.switch_screen('quiz')
+                self.try_to_switch_screen('quiz')
 
     def on_button_menu(self):
         popup = customwidgets.YesNoMessagePopup(
@@ -452,8 +452,8 @@ class Manager(ScreenManager):
         popup.open()
 
     def goto_title(self, *args):
-        self.switch_screen('blank')
-        self._funcs.switch_screen('title', FadeTransition())
+        self.try_to_switch_screen('blank')
+        self._funcs.try_to_switch_screen('title', FadeTransition())
 
 
 def instantiate(**kwargs):

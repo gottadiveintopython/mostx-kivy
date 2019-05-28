@@ -48,7 +48,7 @@ class MostxApp(App):
         self.root = root = MostxScreenManager()
         appglobals = self.appglobals
         appglobals.funcs.update(
-            switch_scene=root.switch_screen,
+            switch_scene=root.try_to_switch_screen,
             play_sound=_create_function_play_sound(),
         )
         user_data_dir = PurePath(self.user_data_dir)

@@ -188,7 +188,7 @@ class MostxQuizLevelup(Screen):
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             if not self._anim1.have_properties_to_animate(self.ids.level):
-                self.manager.switch_screen('main')
+                self.manager.try_to_switch_screen('main')
                 return True
         return super().on_touch_down(touch)
 
@@ -224,7 +224,7 @@ class MostxQuizMain(Screen):
             quizstate.time += time_increament
         else:
             quizstate.time = max(0, quizstate.time - time_increament)
-        self.manager.switch_screen('correct_or_not')
+        self.manager.try_to_switch_screen('correct_or_not')
         self.appglobals.funcs.play_sound('correct' if quizstate.is_correct else 'incorrect')
 
     def on_pre_enter(self):
@@ -293,19 +293,19 @@ class MostxQuizCorrectOrNot(Screen):
 
     def on_button_lookback(self):
         self.appglobals.funcs.play_sound('ti')
-        self.manager.switch_screen(
+        self.manager.try_to_switch_screen(
             'lookback',
             transition=SlideTransition(direction='right'))
 
     def on_button_next(self):
         quizstate = self.quizstate
         if quizstate.is_correct and quizstate.n_cleared == quizstate.n_clear_to_go_to_next_level:
-            self.manager.switch_screen('levelup', FadeTransition())
+            self.manager.try_to_switch_screen('levelup', FadeTransition())
         else:
             if quizstate.time == 0:
                 self.root.goto_result()
             else:
-                self.manager.switch_screen('main')
+                self.manager.try_to_switch_screen('main')
 
 
 class MostxQuizLookbackScreen(Screen):
@@ -318,7 +318,7 @@ class MostxQuizLookbackScreen(Screen):
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             self.appglobals.funcs.play_sound('ti')
-            self.manager.switch_screen(
+            self.manager.try_to_switch_screen(
                 'correct_or_not',
                 transition=SlideTransition(direction='left'))
             return True
@@ -336,7 +336,7 @@ class MostxQuizRoot(Screen):
         super().__init__(**kwargs)
         self._random = random.Random()
         inner_manager = self.inner_manager
-        self.switch_screen = inner_manager.switch_screen
+        self.try_to_switch_screen = inner_manager.try_to_switch_screen
         inner_manager.add_widget(Screen(name='blank'))
         for name, klass in {
             'levelup': MostxQuizLevelup,
@@ -395,10 +395,10 @@ class MostxQuizRoot(Screen):
         self.update_quizsettings()
 
     def on_enter(self):
-        self.switch_screen('main')
+        self.try_to_switch_screen('main')
 
     def on_leave(self):
-        self.switch_screen('blank')
+        self.try_to_switch_screen('blank')
 
     def on_button_menu(self):
         play_sound = self.appglobals.funcs.play_sound
