@@ -2,15 +2,15 @@
 
 import importlib
 import sys
-from pathlib import PurePath, Path
+from pathlib import Path
 from kivy.resources import resource_add_path
 from kivy.properties import ObjectProperty
 from kivy.core.audio import SoundLoader
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
 
-ROOT_DIRECTORY = PurePath(__file__).parents[1]
-sys.path.insert(1, str(ROOT_DIRECTORY / 'lib'))
+APP_DIR = Path(__file__).parent
+sys.path.append(str(APP_DIR / 'libs'))
 
 from langsettings import LangSettings
 from quizsettings import QuizSettings
@@ -51,7 +51,7 @@ class MostxApp(App):
             switch_scene=root.try_to_switch_screen,
             play_sound=_create_function_play_sound(),
         )
-        user_data_dir = PurePath(self.user_data_dir)
+        user_data_dir = Path(self.user_data_dir)
         appglobals.update(
             records=Records(user_data_dir / 'records.json'),
             langsettings=LangSettings(user_data_dir / 'langsettings.json'),
@@ -63,7 +63,7 @@ class MostxApp(App):
         return root
 
     def _setup_all_scenes(self):
-        scene_dir = Path(__file__).parent / 'scenes'
+        scene_dir = APP_DIR / 'scenes'
         scene_names = tuple(
             item.stem for item in scene_dir.iterdir()
             if (not item.stem.startswith('__')) and (
@@ -89,7 +89,7 @@ class MostxApp(App):
 
 def _create_function_play_sound():
 
-    sound_dir = PurePath(__file__).parent.joinpath('data', 'sound', )
+    sound_dir = APP_DIR.joinpath('data', 'sound', )
     filename_dict = {
         'intro': 'se_maoudamashii_effect05.ogg',
         'bween': 'se_maoudamashii_retro03.ogg',
@@ -115,7 +115,7 @@ def _create_function_play_sound():
 
 
 def _main():
-    resource_add_path(str(PurePath(__file__).parent / 'data'))
+    resource_add_path(str(APP_DIR / 'data'))
     MostxApp().run()
 
 
