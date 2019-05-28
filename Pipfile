@@ -1,12 +1,14 @@
 [[source]]
 verify_ssl = true
-url = "https://pypi.org/simple"
 name = "pypi"
-
-[dev-packages]
-watchdog = "*"
-
-[requires]
-python_version = "3.5"
+url = "https://pypi.org/simple"
 
 [packages]
+cython = "==0.28.6"
+pillow = "*"
+kivy = {git = "https://github.com/kivy/kivy.git"}
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
