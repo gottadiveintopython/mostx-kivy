@@ -8,6 +8,7 @@ from kivy.properties import ObjectProperty
 from kivy.core.audio import SoundLoader
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
+from kivy.logger import Logger
 
 APP_DIR = Path(__file__).parent
 sys.path.append(str(APP_DIR / 'libs'))
@@ -45,10 +46,10 @@ class MostxApp(App):
             self.appglobals.data.devmode = config.get('game', 'devmode') != '0'
 
     def build(self):
-        self.root = root = MostxScreenManager()
+        scrmgr = MostxScreenManager()
         appglobals = self.appglobals
         appglobals.funcs.update(
-            switch_scene=root.try_to_switch_screen,
+            switch_scene=scrmgr.try_to_switch_screen,
             play_sound=_create_function_play_sound(),
         )
         user_data_dir = Path(self.user_data_dir)
@@ -58,24 +59,10 @@ class MostxApp(App):
             quizsettings=QuizSettings(user_data_dir / 'quizsettings.json'),
         )
         appglobals.data.devmode = self.config.get('game', 'devmode') != '0'
-        root.add_widget(Screen(name='blank'))
-        self._setup_all_scenes()
-        return root
-
-    def _setup_all_scenes(self):
-        scene_dir = APP_DIR / 'scenes'
-        scene_names = tuple(
-            item.stem for item in scene_dir.iterdir()
-            if (not item.stem.startswith('__')) and (
-                item.is_dir() or (item.suffix == '.py')
-            )
-        )
-        print(scene_names)
-        add_widget = self.root.add_widget
-        appglobals = self.appglobals
-        for name in scene_names:
-            module = importlib.import_module('scenes.' + name)
-            add_widget(module.instantiate(name=name, appglobals=appglobals))
+        scrmgr.add_widget(Screen(name='blank'))
+        for name, module in load_all_scenes(APP_DIR / 'scenes'):
+            scrmgr.add_widget(module.instantiate(name=name, appglobals=appglobals))
+        return scrmgr
 
     def on_start(self):
         self.appglobals.funcs.switch_scene('title')
@@ -85,6 +72,27 @@ class MostxApp(App):
         appglobals.records.save()
         appglobals.langsettings.save()
         # appglobals.quizsettings.save()
+
+
+def load_all_scenes(scene_dir):
+    from importlib.machinery import SourceFileLoader
+
+    def find_scene(scene_dir):
+        for item in scene_dir.iterdir():
+            if item.stem.startswith('__'):
+                continue
+            if item.is_dir():
+                path = item / '__init__.py'
+                if path.is_file():
+                    yield (item.stem, path)
+            else:
+                if item.suffix == '.py':
+                    yield (item.stem, item)
+
+    logger_info = Logger.info
+    for name, modulepath in find_scene(scene_dir):
+        logger_info(f"MostxApp: scene '{name}' found")
+        yield name, SourceFileLoader(f'MostxApp.scene.{name}', str(modulepath)).load_module()
 
 
 def _create_function_play_sound():
