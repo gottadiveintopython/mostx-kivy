@@ -4,11 +4,12 @@ name = "pypi"
 url = "https://pypi.org/simple"
 
 [packages]
-cython = "==0.28.6"
 pillow = "*"
-kivy = {git = "https://github.com/kivy/kivy.git"}
+cython = "==0.28.2"
+kivy = "==1.10.1"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.7"
