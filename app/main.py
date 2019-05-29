@@ -7,7 +7,7 @@ from kivy.resources import resource_add_path
 from kivy.properties import ObjectProperty
 from kivy.core.audio import SoundLoader
 from kivy.app import App
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, NoTransition
 from kivy.logger import Logger
 
 APP_DIR = Path(__file__).parent
@@ -65,7 +65,7 @@ class MostxApp(App):
         return scrmgr
 
     def on_start(self):
-        self.appglobals.funcs.switch_scene('title')
+        self.appglobals.funcs.switch_scene('title', NoTransition())
 
     def on_stop(self):
         appglobals = self.appglobals

@@ -49,7 +49,7 @@ class ResultScreen(Screen):
         self._color_flag = False
 
     def on_touch_down(self, touch):
-        self._funcs.try_to_switch_screen('title')
+        self._funcs.try_to_switch_screen('title', NoTransition())
         return True
 
     def on_pre_enter(self):

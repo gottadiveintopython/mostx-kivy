@@ -152,7 +152,7 @@ class LevelupScreen(Screen):
         self._animation_fadeout.start(self.ids.level)
 
     def on_touch_down(self, touch):
-        self.manager.try_to_switch_screen('quiz')
+        self.manager.try_to_switch_screen('quiz', NoTransition())
         return True
 
 
@@ -373,10 +373,10 @@ class Manager(ScreenManager):
         )
         quizstate.update(**self._quiz_settings['levels'][0])
         self.update_quiz()
-        self.try_to_switch_screen('blank')
+        self.try_to_switch_screen('blank', NoTransition())
 
     def on_enter(self):
-        self.try_to_switch_screen('quiz')
+        self.try_to_switch_screen('quiz', NoTransition())
 
     def on_choose(self, answer):
         quizstate = self._quizstate
@@ -386,7 +386,7 @@ class Manager(ScreenManager):
         quizstate.n_answered += 1
         if quizstate.is_correct:
             quizstate.n_cleared += 1
-        self.try_to_switch_screen('correct_or_not')
+        self.try_to_switch_screen('correct_or_not', NoTransition())
         self._funcs.play_sound('correct' if quizstate.is_correct else 'incorrect')
 
     def next_quiz(self):
@@ -401,7 +401,7 @@ class Manager(ScreenManager):
                 self.try_to_switch_screen('levelup', FadeTransition())
         else:
             self.update_quiz()
-            self.try_to_switch_screen('quiz')
+            self.try_to_switch_screen('quiz', NoTransition())
 
     def on_button_menu(self):
         popup = customwidgets.YesNoMessagePopup(
@@ -412,7 +412,7 @@ class Manager(ScreenManager):
         popup.open()
 
     def goto_title(self, *args):
-        self.try_to_switch_screen('blank')
+        self.try_to_switch_screen('blank', NoTransition())
         self._funcs.try_to_switch_screen('title', FadeTransition())
 
 

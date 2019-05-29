@@ -196,7 +196,7 @@ class MostxRecordsRoot(Factory.Screen):
     def on_leave(self):
         Clock.unschedule(self._update_index_of_triangle_color)
         inner_manager = self.ids.inner_manager
-        inner_manager.try_to_switch_screen('blank')
+        inner_manager.try_to_switch_screen('blank', NoTransition())
 
     def _update_index_of_triangle_color(self, __):
         self._index_of_triangle_color = \

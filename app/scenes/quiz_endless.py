@@ -11,7 +11,7 @@ from kivy.properties import (
     ListProperty, OptionProperty,
 )
 from kivy.uix.screenmanager import (
-    Screen, SlideTransition, FadeTransition,
+    Screen, SlideTransition, FadeTransition, NoTransition,
 )
 
 import mostx
@@ -188,7 +188,7 @@ class MostxQuizLevelup(Screen):
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             if not self._anim1.have_properties_to_animate(self.ids.level):
-                self.manager.try_to_switch_screen('main')
+                self.manager.try_to_switch_screen('main', NoTransition())
                 return True
         return super().on_touch_down(touch)
 
@@ -224,7 +224,7 @@ class MostxQuizMain(Screen):
             quizstate.time += time_increament
         else:
             quizstate.time = max(0, quizstate.time - time_increament)
-        self.manager.try_to_switch_screen('correct_or_not')
+        self.manager.try_to_switch_screen('correct_or_not', NoTransition())
         self.appglobals.funcs.play_sound('correct' if quizstate.is_correct else 'incorrect')
 
     def on_pre_enter(self):
@@ -305,7 +305,7 @@ class MostxQuizCorrectOrNot(Screen):
             if quizstate.time == 0:
                 self.root.goto_result()
             else:
-                self.manager.try_to_switch_screen('main')
+                self.manager.try_to_switch_screen('main', NoTransition())
 
 
 class MostxQuizLookbackScreen(Screen):
@@ -395,10 +395,10 @@ class MostxQuizRoot(Screen):
         self.update_quizsettings()
 
     def on_enter(self):
-        self.try_to_switch_screen('main')
+        self.try_to_switch_screen('main', NoTransition())
 
     def on_leave(self):
-        self.try_to_switch_screen('blank')
+        self.try_to_switch_screen('blank', NoTransition())
 
     def on_button_menu(self):
         play_sound = self.appglobals.funcs.play_sound
