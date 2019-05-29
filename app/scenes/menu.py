@@ -27,14 +27,14 @@ Builder.load_string(r'''
                 funcs = root.appglobals.funcs
                 funcs.play_sound('bween')
                 funcs.switch_scene('countdown', FadeTransition(duration=1))
-        MostxMenuItem:
-            text: 'Play TimeAttack Mode'
-            on_release:
-                root.appglobals.data.mode = 'timeattack'
-                funcs = root.appglobals.funcs
-                funcs.play_sound('bween')
-                funcs.switch_scene('countdown', FadeTransition(duration=1))
-            disabled: True
+        # MostxMenuItem:
+        #     text: 'Play TimeAttack Mode'
+        #     on_release:
+        #         root.appglobals.data.mode = 'timeattack'
+        #         funcs = root.appglobals.funcs
+        #         funcs.play_sound('bween')
+        #         funcs.switch_scene('countdown', FadeTransition(duration=1))
+        #     disabled: True
         MostxMenuItem:
             text: 'View Records'
             on_release:
