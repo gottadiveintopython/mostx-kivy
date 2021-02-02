@@ -1,0 +1,10 @@
+__pycache__/
+bin/
+*.pyc
+*.pyo
+/.venv/
+/.pytest_cache/
+/*kivymd*/
+/Pipfile.lock
+/poetry.lock
+/dist
